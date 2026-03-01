@@ -687,8 +687,8 @@
             <button id="globalResetBtn" onclick="confirmGlobalReset()" title="Reset all inputs to factory defaults"
                 style="
                 background: transparent;
-                border: 1.5px solid #ee3333;
-                color: #ee3333;
+                border: 1.5px solid #e6a817;
+                color: #e6a817;
                 border-radius: 4px;
                 padding: 3px 9px;
                 font-size: 9px;
@@ -700,8 +700,8 @@
                 gap: 4px;
                 transition: all 0.2s;
                 font-family: inherit;
-            " onmouseover="this.style.background='#ee3333';this.style.color='white'"
-                onmouseout="this.style.background='transparent';this.style.color='#ee3333'">
+            " onmouseover="this.style.background='#e6a817';this.style.color='#000'"
+                onmouseout="this.style.background='transparent';this.style.color='#e6a817'">
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 2v6h6" />
@@ -845,11 +845,31 @@
                             <div class="fade-in">
                                 <div class="stat-card"
                                     style="border: 1px solid var(--border-color); border-top: 3px solid var(--bloomberg-blue); background: #fcfcfc;">
-                                    <button class="btn-primary" onclick="simulateForwardHedge()"
-                                        style="width: 100%; margin-bottom: 20px; font-weight: 900; letter-spacing: 0.5px; background: #ee3333; height: 45px; font-size: 14px; box-shadow: 0 4px 10px rgba(238, 51, 51, 0.2);">
+                                    <button class="btn-primary"
+                                        onclick="simulateForwardHedge(); setTimeout(revealAutoPopulate, 100);"
+                                        style="width: 100%; margin-bottom: 12px; font-weight: 900; letter-spacing: 0.5px; background: #ee3333; height: 45px; font-size: 14px; box-shadow: 0 4px 10px rgba(238, 51, 51, 0.2);">
                                         <i data-lucide="play" size="14" style="margin-right: 5px;"></i> RUN RISK
                                         ANALYSIS
                                     </button>
+
+                                    <!-- AUTO-POPULATE — hidden until RUN is pressed -->
+                                    <div id="autoPopulateWrapper"
+                                        style="display:none; margin-bottom:16px; animation: fadeIn 0.4s ease;">
+                                        <button onclick="automateProfits()" id="autoPopulateBtn"
+                                            style="width: 100%; height: 44px; background: linear-gradient(135deg, #0033cc 0%, #1a5cff 100%); color: white; border: none; font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,51,204,0.3); transition: all 0.2s; border-radius: 3px;"
+                                            onmouseover="this.style.transform='scale(1.01)'"
+                                            onmouseout="this.style.transform='scale(1)'">
+                                            <i data-lucide="cpu" size="14"></i>
+                                            AUTO-POPULATE FOR MAX PROFIT
+                                            <span
+                                                style="background: rgba(255,255,255,0.2); font-size: 9px; padding: 2px 6px; border-radius: 10px;">AI
+                                                ENGINE</span>
+                                        </button>
+                                        <div
+                                            style="font-size: 9px; text-align: center; color: #888; margin-top: 4px; font-weight: 600;">
+                                            Applies optimal Strike, Ratio &amp; Profile — then re-runs instantly
+                                        </div>
+                                    </div>
 
                                     <h3
                                         style="font-size: 11px; margin-bottom: 15px; color: var(--bloomberg-blue); font-weight: 900;">
@@ -1115,24 +1135,6 @@
                                         </div>
                                     </div>
 
-                                </div>
-
-                                <!-- ALWAYS-VISIBLE AUTO-POPULATE BUTTON -->
-                                <div style="margin-top: 15px;">
-                                    <button onclick="automateProfits()" id="autoPopulateBtn"
-                                        style="width: 100%; height: 48px; background: linear-gradient(135deg, #0033cc 0%, #1a5cff 100%); color: white; border: none; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,51,204,0.3); transition: all 0.2s;"
-                                        onmouseover="this.style.transform='scale(1.01)'"
-                                        onmouseout="this.style.transform='scale(1)'">
-                                        <i data-lucide="cpu" size="16"></i>
-                                        AUTO-POPULATE INPUTS FOR MAXIMUM PROFIT
-                                        <span
-                                            style="background: rgba(255,255,255,0.2); font-size: 9px; padding: 2px 6px; border-radius: 10px;">AI
-                                            ENGINE</span>
-                                    </button>
-                                    <div
-                                        style="font-size: 9px; text-align: center; color: #888; margin-top: 4px; font-weight: 600;">
-                                        Applies optimal Strike, Ratio, Hedge Profile & FTR Shield — then re-runs
-                                        simulation instantly</div>
                                 </div>
 
                                 <div class="stat-card" id="performanceVerdictBox"
@@ -2952,7 +2954,7 @@
 
             // 8. SMART ALERTS
             const smartAlerts = [];
-            if (annual < 0) smartAlerts.push(`🔴 CRITICAL: Portfolio in negative variance. Consider reducing strike to ₱${suggestedStrike}.`);
+            if (annual < 0) smartAlerts.push(`🔴 CRITICAL: Portfolio in negative variance. Consider reducing strike to ₱${window.latestSuggestedStrike || Math.round(parseFloat(document.getElementById('strikePrice').value) * 0.92)}.`);
             if (marginBreachRisk) smartAlerts.push(`🟠 MARGIN: Drawdown approaching breach threshold. Top-up collateral immediately.`);
             if (kelly < 0.2) smartAlerts.push(`🟡 SIZING: Kelly fraction < 20%. Reduce position size to preserve capital.`);
             if (cpRating === 'C') smartAlerts.push(`🔴 CREDIT: Distressed counterparty detected. CVA charge ₱6.40M outstanding.`);
@@ -2972,7 +2974,7 @@
             document.getElementById('expectedSettle').style.color = annual >= 0 ? '#2e7d32' : '#d73a49';
 
             // Store sim data for export (feature 10)
-            window.lastSimData = { strike: strikeVal2, hedgeRatioPct, annual, maxDDValue, avgSpot, counterparty: cpRating, kelly, optimalSize };
+            window.lastSimData = { strike: strikeVal2, hedgeRatioPct, annual, maxDDValue, avgSpot: (window.lastSimData && window.lastSimData.avgSpot) || 0, counterparty: cpRating, kelly, optimalSize };
 
             lucide.createIcons();
         }
@@ -4577,6 +4579,18 @@ Generated: ${new Date().toLocaleString('en-PH')}`;
         }
 
         // ============================================================
+        //  REVEAL AUTO-POPULATE (called when RUN RISK ANALYSIS is pressed)
+        // ============================================================
+        function revealAutoPopulate() {
+            var wrapper = document.getElementById('autoPopulateWrapper');
+            if (wrapper) {
+                wrapper.style.display = 'block';
+                // Re-render lucide icons inside the newly revealed button
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }
+        }
+
+        // ============================================================
         //  GLOBAL RESET
         // ============================================================
         function confirmGlobalReset() {
@@ -4596,6 +4610,24 @@ Generated: ${new Date().toLocaleString('en-PH')}`;
                 var el = document.getElementById(id);
                 if (el) el.selectedIndex = idx;
             }
+
+            // === CLEAR ALL AI SET BADGES + HIGHLIGHTS ===
+            document.querySelectorAll('.ai-set-badge').forEach(function (b) { b.remove(); });
+            document.querySelectorAll('.ai-highlighted').forEach(function (el) { el.classList.remove('ai-highlighted'); });
+
+            // === RESET AUTO-POPULATE BUTTON & WRAPPER ===
+            var apWrapper = document.getElementById('autoPopulateWrapper');
+            if (apWrapper) apWrapper.style.display = 'none';
+            var apBtn = document.getElementById('autoPopulateBtn');
+            if (apBtn) {
+                apBtn.style.background = 'linear-gradient(135deg, #0033cc 0%, #1a5cff 100%)';
+                apBtn.innerHTML = '<i data-lucide="cpu" size="14"></i> AUTO-POPULATE FOR MAX PROFIT <span style="background:rgba(255,255,255,0.2);font-size:9px;padding:2px 6px;border-radius:10px;">AI ENGINE</span>';
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }
+            // Clear cached AI suggestions
+            window.latestSuggestedStrike = null;
+            window.latestSuggestedRatio = null;
+            window.latestSuggestedThreshold = null;
 
             // === CONTRACT DESIGN ===
             sv('strikePrice', 5000);
