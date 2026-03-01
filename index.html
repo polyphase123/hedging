@@ -558,6 +558,118 @@
             color: var(--text-dim);
             font-weight: 700;
         }
+
+        /* === GLOBAL RESET CONFIRMATION MODAL === */
+        #resetConfirmOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        #resetConfirmOverlay.show {
+            display: flex;
+        }
+
+        #resetConfirmBox {
+            background: white;
+            border-radius: 8px;
+            padding: 32px 36px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            border-top: 5px solid #ee3333;
+        }
+
+        body.dark-mode #resetConfirmBox {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        #resetConfirmBox h2 {
+            font-size: 16px;
+            font-weight: 900;
+            color: #ee3333;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        #resetConfirmBox p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        body.dark-mode #resetConfirmBox p {
+            color: #aaa;
+        }
+
+        .reset-confirm-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .reset-confirm-btns button {
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: 0.15s;
+        }
+
+        .btn-reset-confirm {
+            background: #ee3333;
+            color: white;
+        }
+
+        .btn-reset-confirm:hover {
+            background: #cc2222;
+        }
+
+        .btn-reset-cancel {
+            background: #eee;
+            color: #333;
+        }
+
+        .btn-reset-cancel:hover {
+            background: #ddd;
+        }
+
+        /* === RESET TOAST === */
+        #resetToast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #222;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 999999;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #resetToast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 
@@ -571,6 +683,32 @@
         </div>
         <div class="header-tools">
             <div id="clock"></div>
+            <!-- GLOBAL RESET BUTTON -->
+            <button id="globalResetBtn" onclick="confirmGlobalReset()" title="Reset all inputs to factory defaults"
+                style="
+                background: transparent;
+                border: 1.5px solid #ee3333;
+                color: #ee3333;
+                border-radius: 4px;
+                padding: 3px 9px;
+                font-size: 9px;
+                font-weight: 900;
+                letter-spacing: 0.8px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                transition: all 0.2s;
+                font-family: inherit;
+            " onmouseover="this.style.background='#ee3333';this.style.color='white'"
+                onmouseout="this.style.background='transparent';this.style.color='#ee3333'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 2v6h6" />
+                    <path d="M3 13a9 9 0 1 0 3-7.7L3 8" />
+                </svg>
+                RESET
+            </button>
             <div onclick="toggleDarkMode()" style="cursor: pointer; color: var(--bloomberg-blue);">
                 <i data-lucide="moon" id="themeIcon" size="14" style="vertical-align: middle;"></i>
             </div>
@@ -4438,7 +4576,112 @@ Generated: ${new Date().toLocaleString('en-PH')}`;
             })();
         }
 
+        // ============================================================
+        //  GLOBAL RESET
+        // ============================================================
+        function confirmGlobalReset() {
+            document.getElementById('resetConfirmOverlay').classList.add('show');
+        }
+
+        function globalReset() {
+            // --- Close modal ---
+            document.getElementById('resetConfirmOverlay').classList.remove('show');
+
+            // Helper: safely set value
+            function sv(id, val) {
+                var el = document.getElementById(id);
+                if (el) el.value = val;
+            }
+            function sc(id, idx) {
+                var el = document.getElementById(id);
+                if (el) el.selectedIndex = idx;
+            }
+
+            // === CONTRACT DESIGN ===
+            sv('strikePrice', 5000);
+            sv('contractQty', 10);
+            sv('hedgeRatio', 85);
+            sv('marginThreshold', 5.0);
+            sv('carbonTax', 0);
+            sv('solarWeight', 10);
+            sc('cfdScope', 0);   // System Average (GWAP)
+            sc('cfdType', 0);   // Two-Way CFD
+            sc('counterpartyRating', 0);   // AAA
+            sc('loadProfile', 0);   // Flat
+            sc('refPeriod', 0);   // 2025
+
+            // === ADVANCED RISK CONTROLS ===
+            sc('basisSwapNode', 0);   // System Reference
+            sc('fuelLinking', 0);   // Unlinked
+            sc('weatherInf', 0);   // Normal
+
+            // Update solar weight display label
+            var sw = document.getElementById('solarWeight');
+            if (sw) {
+                var lbl = sw.parentNode.querySelector('span');
+                if (lbl) lbl.textContent = '10%';
+            }
+
+            // === BACKTESTING ENGINE ===
+            sv('btStrike', 5000);
+            sv('btRatio', 80);
+            sv('btYearFrom', 2022);
+            sv('btYearTo', 2025);
+            var btRegion = document.getElementById('btRegion');
+            if (btRegion) btRegion.selectedIndex = 0;
+
+            // === STRESS TEST ===
+            sv('stressShift', 20);
+            var stressScenario = document.getElementById('stressScenario');
+            if (stressScenario) stressScenario.selectedIndex = 0;
+
+            // === COMMAND BAR ===
+            sv('commandInput', '');
+
+            // === SCHEDULING — clear active hedge list if exists ===
+            var hedgeList = document.getElementById('hedgeTrackerList');
+            if (hedgeList) hedgeList.innerHTML = '<p style="color:#999;font-size:11px;padding:10px 0;">No active hedges. Add one above.</p>';
+
+            // === DARK MODE — reset to light ===
+            if (document.body.classList.contains('dark-mode')) {
+                toggleDarkMode();
+            }
+
+            // === Re-run simulation ===
+            if (typeof simulateForwardHedge === 'function') simulateForwardHedge();
+            if (typeof updateHedgeDescription === 'function') updateHedgeDescription();
+
+            // === Navigate back to hedging tab ===
+            if (typeof switchTab === 'function') switchTab('hedging');
+
+            // === Show toast ===
+            var toast = document.getElementById('resetToast');
+            if (toast) {
+                toast.classList.add('show');
+                setTimeout(function () { toast.classList.remove('show'); }, 3000);
+            }
+        }
+
+
     </script>
+
+    <!-- ===== GLOBAL RESET CONFIRMATION MODAL ===== -->
+    <div id="resetConfirmOverlay">
+        <div id="resetConfirmBox">
+            <h2>⚠ GLOBAL RESET</h2>
+            <p>This will restore <strong>all inputs</strong> to factory defaults and re-run the simulation.<br>Any
+                custom values you have entered will be lost.</p>
+            <div class="reset-confirm-btns">
+                <button class="btn-reset-confirm" onclick="globalReset()">✓ CONFIRM RESET</button>
+                <button class="btn-reset-cancel"
+                    onclick="document.getElementById('resetConfirmOverlay').classList.remove('show')">✕ CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== RESET TOAST ===== -->
+    <div id="resetToast">✔ All inputs reset to factory defaults</div>
+
 </body>
 
 </html>
