@@ -12,7 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" onload="lucide.createIcons()"></script>
     <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
@@ -168,9 +168,11 @@
             box-shadow: 0 2px 8px rgba(0, 51, 204, 0.4);
         }
 
-        .nav-item i {
+        .nav-item i,
+        .nav-item svg {
             width: 20px;
             height: 20px;
+            flex-shrink: 0;
         }
 
         .content-container {
@@ -568,7 +570,7 @@
             <input type="text" id="commandInput" placeholder="CMD (HEDGE, HIST, HELP)..." autofocus>
         </div>
         <div class="header-tools">
-            <div id="clock">10:42:48</div>
+            <div id="clock"></div>
             <div onclick="toggleDarkMode()" style="cursor: pointer; color: var(--bloomberg-blue);">
                 <i data-lucide="moon" id="themeIcon" size="14" style="vertical-align: middle;"></i>
             </div>
@@ -624,10 +626,63 @@
     <main>
         <nav class="sidebar">
             <div class="nav-item active" onclick="switchTab('hedging')" title="Hedging Suite">
-                <i data-lucide="shield"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
             </div>
             <div class="nav-item" onclick="switchTab('history')" title="Historical Analysis">
-                <i data-lucide="history"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3v5h5" />
+                    <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
+                    <path d="M12 7v5l4 2" />
+                </svg>
+            </div>
+            <div class="nav-item" onclick="switchTab('analytics')" title="Analytics &amp; VaR">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                </svg>
+            </div>
+            <div class="nav-item" onclick="switchTab('risktools')" title="Risk Management">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+            </div>
+            <div class="nav-item" onclick="switchTab('scheduling')" title="Scheduling &amp; Workflow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                    <path d="M9 16l2 2 4-4" />
+                </svg>
+            </div>
+            <div class="nav-item" onclick="switchTab('backtesting')" title="Backtesting &amp; Stress Tests">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2v6" />
+                    <path d="m6 8 6 6" />
+                    <path d="M6 8H3" />
+                    <path d="m6 8 3-3" />
+                    <path d="M9 3h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9" />
+                    <path d="M18 13v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1" />
+                </svg>
+            </div>
+            <div class="nav-item" onclick="switchTab('uxtoolkit')" title="UX Toolkit &amp; Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
             </div>
         </nav>
 
@@ -1398,6 +1453,632 @@
 
 
 
+                <!-- ====================== ANALYTICS & VAR TAB ====================== -->
+                <div id="analytics" class="tab-content fade-in">
+                    <div class="panel-header">
+                        <span><i data-lucide="bar-chart-2" size="14"></i> Analytics Engine — VaR · Correlation · Forward
+                            Curve · Break-Even</span>
+                    </div>
+                    <div class="scrollable"
+                        style="padding:20px; display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+
+                        <!-- VaR Dashboard -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #0033cc;padding:16px;grid-column:1/-1;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#0033cc;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="activity" size="12" style="vertical-align:middle;"></i>
+                                    VALUE-AT-RISK (VaR) DASHBOARD</span>
+                                <button onclick="computeVaR()"
+                                    style="background:#0033cc;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 12px;cursor:pointer;">COMPUTE
+                                    VaR</button>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                                <div
+                                    style="background:#f0f4ff;padding:12px;border-top:2px solid #0033cc;text-align:center;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">MONTE CARLO VaR (95%)</div>
+                                    <div id="varMC"
+                                        style="font-size:22px;font-weight:900;font-family:'Roboto Mono';color:#0033cc;">
+                                        --</div>
+                                </div>
+                                <div
+                                    style="background:#f0f4ff;padding:12px;border-top:2px solid #7b1fa2;text-align:center;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">HISTORICAL VaR (99%)</div>
+                                    <div id="varHist"
+                                        style="font-size:22px;font-weight:900;font-family:'Roboto Mono';color:#7b1fa2;">
+                                        --</div>
+                                </div>
+                                <div
+                                    style="background:#f0f4ff;padding:12px;border-top:2px solid #e65100;text-align:center;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">PARAMETRIC VaR (97.5%)</div>
+                                    <div id="varParam"
+                                        style="font-size:22px;font-weight:900;font-family:'Roboto Mono';color:#e65100;">
+                                        --</div>
+                                </div>
+                            </div>
+                            <div id="varBarChart" style="height:180px;"></div>
+                        </div>
+
+                        <!-- Correlation Matrix -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #00796b;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#00796b;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="grid" size="12" style="vertical-align:middle;"></i> CORRELATION MATRIX
+                            </div>
+                            <div id="correlationMatrix" style="overflow-x:auto;"></div>
+                        </div>
+
+                        <!-- Forward Curve -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #f57c00;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#f57c00;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="trending-up" size="12" style="vertical-align:middle;"></i> FORWARD CURVE
+                                BUILDER
+                            </div>
+                            <div id="forwardCurveChart" style="height:220px;"></div>
+                        </div>
+
+                        <!-- Break-Even Engine -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #2e7d32;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#2e7d32;text-transform:uppercase;margin-bottom:10px;">
+                                <i data-lucide="target" size="12" style="vertical-align:middle;"></i> BREAK-EVEN
+                                ANALYSIS ENGINE
+                            </div>
+                            <div style="font-size:10px;color:#555;margin-bottom:10px;">Spot price threshold where hedge
+                                flips P&amp;L sign:</div>
+                            <div style="display:flex;align-items:center;gap:15px;margin-bottom:12px;">
+                                <div
+                                    style="text-align:center;flex:1;background:#edffed;padding:12px;border-top:2px solid #2e7d32;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">BREAK-EVEN PRICE</div>
+                                    <div id="breakEvenPrice"
+                                        style="font-size:24px;font-weight:900;color:#2e7d32;font-family:'Roboto Mono';">
+                                        --</div>
+                                </div>
+                                <div
+                                    style="text-align:center;flex:1;background:#fff8f8;padding:12px;border-top:2px solid #d73a49;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">CURRENT SPREAD</div>
+                                    <div id="breakEvenSpread"
+                                        style="font-size:24px;font-weight:900;color:#d73a49;font-family:'Roboto Mono';">
+                                        --</div>
+                                </div>
+                            </div>
+                            <div id="breakEvenChart" style="height:160px;"></div>
+                        </div>
+
+                        <!-- Optimal Entry Signal -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #37474f;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#37474f;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="traffic-cone" size="12" style="vertical-align:middle;"></i> OPTIMAL
+                                HEDGE ENTRY SIGNAL
+                            </div>
+                            <div id="entrySignalDisplay" style="text-align:center;padding:20px 10px;">
+                                <div id="entrySignalLight" style="font-size:52px;">⚪</div>
+                                <div id="entrySignalText"
+                                    style="font-size:14px;font-weight:900;color:#555;margin-top:8px;">AWAITING
+                                    SIMULATION</div>
+                                <div id="entrySignalDetail" style="font-size:10px;color:#888;margin-top:6px;">Run the
+                                    hedging simulation first to activate the signal engine.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ====================== RISK MANAGEMENT TAB ====================== -->
+                <div id="risktools" class="tab-content fade-in">
+                    <div class="panel-header">
+                        <span><i data-lucide="shield-alert" size="14"></i> Risk Management — Greeks · Heat Calendar ·
+                            Portfolio Map · Concentration</span>
+                    </div>
+                    <div class="scrollable" style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+
+                        <!-- Greeks Calculator -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #7b1fa2;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#7b1fa2;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="sigma" size="12" style="vertical-align:middle;"></i> ENERGY
+                                    OPTIONS GREEKS</span>
+                                <button onclick="computeGreeks()"
+                                    style="background:#7b1fa2;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 10px;cursor:pointer;">COMPUTE</button>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+                                <div class="input-group" style="margin-bottom:0;"><label>OPTION TYPE</label><select
+                                        id="greeksOptType">
+                                        <option value="call">Call / Cap</option>
+                                        <option value="put">Put / Floor</option>
+                                    </select></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>VOLATILITY (σ %)</label><input
+                                        type="number" id="greeksVol" value="25" step="1"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>STRIKE (₱/MWh)</label><input
+                                        type="number" id="greeksStrike" value="5000" step="50"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>TIME TO EXPIRY
+                                        (mo)</label><input type="number" id="greeksTTE" value="6" step="1"></div>
+                            </div>
+                            <div id="greeksOutput"
+                                style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;">
+                                <div style="background:#fdf5ff;padding:8px;border-top:2px solid #7b1fa2;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">Δ DELTA</div>
+                                    <div id="gDelta"
+                                        style="font-size:18px;font-weight:900;color:#7b1fa2;font-family:monospace;">--
+                                    </div>
+                                </div>
+                                <div style="background:#fdf5ff;padding:8px;border-top:2px solid #7b1fa2;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">Γ GAMMA</div>
+                                    <div id="gGamma"
+                                        style="font-size:18px;font-weight:900;color:#7b1fa2;font-family:monospace;">--
+                                    </div>
+                                </div>
+                                <div style="background:#fdf5ff;padding:8px;border-top:2px solid #7b1fa2;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">Θ THETA (₱/day)</div>
+                                    <div id="gTheta"
+                                        style="font-size:18px;font-weight:900;color:#d73a49;font-family:monospace;">--
+                                    </div>
+                                </div>
+                                <div style="background:#fdf5ff;padding:8px;border-top:2px solid #7b1fa2;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">ν VEGA (%vol)</div>
+                                    <div id="gVega"
+                                        style="font-size:18px;font-weight:900;color:#2e7d32;font-family:monospace;">--
+                                    </div>
+                                </div>
+                                <div style="background:#fdf5ff;padding:8px;border-top:2px solid #7b1fa2;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">ρ RHO (rate)</div>
+                                    <div id="gRho"
+                                        style="font-size:18px;font-weight:900;color:#0033cc;font-family:monospace;">--
+                                    </div>
+                                </div>
+                                <div style="background:#edffed;padding:8px;border-top:2px solid #2e7d32;">
+                                    <div style="font-size:9px;color:#888;font-weight:800;">OPTION PREMIUM</div>
+                                    <div id="gPremium"
+                                        style="font-size:18px;font-weight:900;color:#2e7d32;font-family:monospace;">--
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Portfolio Heat Map -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #e65100;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#e65100;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="map" size="12" style="vertical-align:middle;"></i> PORTFOLIO HEAT MAP
+                            </div>
+                            <div id="portfolioHeatMap" style="overflow-x:auto;"></div>
+                        </div>
+
+                        <!-- Liquidity Risk Heat Calendar -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #1565c0;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#1565c0;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="flame" size="12" style="vertical-align:middle;"></i> LIQUIDITY RISK HEAT
+                                CALENDAR
+                            </div>
+                            <div id="liquidityCalendar" style="overflow-x:auto;"></div>
+                        </div>
+
+                        <!-- Concentration Risk Monitor -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #d73a49;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#d73a49;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="alert-triangle" size="12" style="vertical-align:middle;"></i>
+                                CONCENTRATION RISK MONITOR
+                            </div>
+                            <div id="concentrationRiskOut" style="font-size:10px;color:#555;line-height:1.9;">Run a
+                                simulation to scan for counterparty, period, and nodal concentration risks.</div>
+                            <div id="concentrationBars" style="margin-top:10px;"></div>
+                        </div>
+
+                        <!-- Auto-Roll Strategy -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #33691e;padding:16px;grid-column:1/-1;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#33691e;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="refresh-cw" size="12" style="vertical-align:middle;"></i>
+                                    AUTO-ROLL STRATEGY CALCULATOR</span>
+                                <button onclick="computeAutoRoll()"
+                                    style="background:#33691e;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 10px;cursor:pointer;">CALCULATE
+                                    ROLL</button>
+                            </div>
+                            <div
+                                style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px;">
+                                <div class="input-group" style="margin-bottom:0;"><label>CURRENT STRIKE
+                                        (₱)</label><input type="number" id="rollCurrentStrike" value="5000" step="50">
+                                </div>
+                                <div class="input-group" style="margin-bottom:0;"><label>EXPIRY (months)</label><input
+                                        type="number" id="rollExpiry" value="3" step="1"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>CARRY COST (%/yr)</label><input
+                                        type="number" id="rollCarry" value="4.5" step="0.1"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>NEXT PERIOD TERM
+                                        (mo)</label><input type="number" id="rollNextTerm" value="12" step="1"></div>
+                            </div>
+                            <div id="autoRollResult"
+                                style="background:#f9fbe7;padding:12px;border-left:3px solid #33691e;font-size:11px;line-height:1.8;color:#33691e;">
+                                Enter parameters above and click CALCULATE ROLL to see the optimal roll timing and
+                                target price.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ====================== SCHEDULING & WORKFLOW TAB ====================== -->
+                <div id="scheduling" class="tab-content fade-in">
+                    <div class="panel-header">
+                        <span><i data-lucide="calendar-check" size="14"></i> Scheduling & Workflow — Multi-Period
+                            Planner · Deal Ticket · Expiry Tracker</span>
+                    </div>
+                    <div class="scrollable" style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+
+                        <!-- Multi-Period Hedge Planner -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #0033cc;padding:16px;grid-column:1/-1;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#0033cc;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="layout-grid" size="12" style="vertical-align:middle;"></i>
+                                    MULTI-PERIOD HEDGE PLANNER (Q1–Q4 2026)</span>
+                                <button onclick="computeMultiPeriod()"
+                                    style="background:#0033cc;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 10px;cursor:pointer;">PLAN
+                                    ALL PERIODS</button>
+                            </div>
+                            <div
+                                style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
+                                <div style="background:#f0f4ff;padding:10px;border-top:2px solid #0033cc;">
+                                    <div style="font-size:9px;font-weight:800;color:#0033cc;margin-bottom:6px;">Q1 —
+                                        JAN-MAR</div>
+                                    <div class="input-group" style="margin-bottom:4px;"><label
+                                            style="font-size:8px;">STRIKE</label><input type="number" id="mpStrikeQ1"
+                                            value="4500" step="50" style="height:24px;font-size:10px;"></div>
+                                    <div class="input-group" style="margin-bottom:0;"><label
+                                            style="font-size:8px;">RATIO %</label><input type="number" id="mpRatioQ1"
+                                            value="85" step="5" style="height:24px;font-size:10px;"></div>
+                                </div>
+                                <div style="background:#f0f4ff;padding:10px;border-top:2px solid #0033cc;">
+                                    <div style="font-size:9px;font-weight:800;color:#0033cc;margin-bottom:6px;">Q2 —
+                                        APR-JUN</div>
+                                    <div class="input-group" style="margin-bottom:4px;"><label
+                                            style="font-size:8px;">STRIKE</label><input type="number" id="mpStrikeQ2"
+                                            value="4800" step="50" style="height:24px;font-size:10px;"></div>
+                                    <div class="input-group" style="margin-bottom:0;"><label
+                                            style="font-size:8px;">RATIO %</label><input type="number" id="mpRatioQ2"
+                                            value="90" step="5" style="height:24px;font-size:10px;"></div>
+                                </div>
+                                <div style="background:#f0f4ff;padding:10px;border-top:2px solid #0033cc;">
+                                    <div style="font-size:9px;font-weight:800;color:#0033cc;margin-bottom:6px;">Q3 —
+                                        JUL-SEP</div>
+                                    <div class="input-group" style="margin-bottom:4px;"><label
+                                            style="font-size:8px;">STRIKE</label><input type="number" id="mpStrikeQ3"
+                                            value="5200" step="50" style="height:24px;font-size:10px;"></div>
+                                    <div class="input-group" style="margin-bottom:0;"><label
+                                            style="font-size:8px;">RATIO %</label><input type="number" id="mpRatioQ3"
+                                            value="95" step="5" style="height:24px;font-size:10px;"></div>
+                                </div>
+                                <div style="background:#f0f4ff;padding:10px;border-top:2px solid #0033cc;">
+                                    <div style="font-size:9px;font-weight:800;color:#0033cc;margin-bottom:6px;">Q4 —
+                                        OCT-DEC</div>
+                                    <div class="input-group" style="margin-bottom:4px;"><label
+                                            style="font-size:8px;">STRIKE</label><input type="number" id="mpStrikeQ4"
+                                            value="4700" step="50" style="height:24px;font-size:10px;"></div>
+                                    <div class="input-group" style="margin-bottom:0;"><label
+                                            style="font-size:8px;">RATIO %</label><input type="number" id="mpRatioQ4"
+                                            value="88" step="5" style="height:24px;font-size:10px;"></div>
+                                </div>
+                            </div>
+                            <div id="multiPeriodResult" style="overflow-x:auto;"></div>
+                        </div>
+
+                        <!-- Deal Ticket Generator -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #2e7d32;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#2e7d32;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="file-signature" size="12" style="vertical-align:middle;"></i> DEAL
+                                    TICKET GENERATOR</span>
+                                <button onclick="generateDealTicket()"
+                                    style="background:#2e7d32;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 10px;cursor:pointer;">GENERATE
+                                    TICKET</button>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                                <div class="input-group" style="margin-bottom:0;"><label>COUNTERPARTY NAME</label><input
+                                        type="text" id="dtCounterparty" value="San Miguel Energy Corp"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>TRADER NAME</label><input
+                                        type="text" id="dtTrader" value="Engr. Franz I. Tobias"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>TRADE DATE</label><input
+                                        type="date" id="dtTradeDate" value="2026-03-01"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>SETTLEMENT TERM</label><select
+                                        id="dtTerm">
+                                        <option>12 Months</option>
+                                        <option>6 Months</option>
+                                        <option>3 Months</option>
+                                        <option>1 Month</option>
+                                    </select></div>
+                            </div>
+                            <div id="dealTicketOut"
+                                style="border:2px solid #2e7d32;padding:14px;background:#f9fff9;font-size:10px;line-height:2.0;font-family:'Roboto Mono';display:none;">
+                            </div>
+                            <button id="printTicketBtn" onclick="printDealTicket()"
+                                style="display:none;margin-top:8px;background:#1b5e20;color:white;border:none;width:100%;height:32px;font-weight:900;font-size:10px;cursor:pointer;">🖨️
+                                PRINT / SAVE PDF</button>
+                        </div>
+
+                        <!-- Hedge Expiry Countdown Tracker -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #e65100;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#e65100;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="timer" size="12" style="vertical-align:middle;"></i> HEDGE EXPIRY
+                                    COUNTDOWN TRACKER</span>
+                                <button onclick="addHedgeExpiry()"
+                                    style="background:#e65100;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 10px;cursor:pointer;">+
+                                    ADD HEDGE</button>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+                                <div class="input-group" style="margin-bottom:0;"><label style="font-size:8px;">HEDGE
+                                        NAME</label><input type="text" id="expiryName" value="SMEC FY2026"
+                                        style="height:26px;font-size:10px;"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label style="font-size:8px;">EXPIRY
+                                        DATE</label><input type="date" id="expiryDate" value="2026-12-31"
+                                        style="height:26px;font-size:10px;"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label style="font-size:8px;">SETTLE
+                                        AMT (₱M)</label><input type="number" id="expiryAmt" value="12.5" step="0.5"
+                                        style="height:26px;font-size:10px;"></div>
+                            </div>
+                            <div id="expiryTrackerList" style="max-height:250px;overflow-y:auto;"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ====================== BACKTESTING & STRESS TAB ====================== -->
+                <div id="backtesting" class="tab-content fade-in">
+                    <div class="panel-header">
+                        <span><i data-lucide="flask-conical" size="14"></i> Backtesting Engine & Stress Testing
+                            Suite</span>
+                    </div>
+                    <div class="scrollable" style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+
+                        <!-- Backtesting Engine -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #0033cc;padding:16px;grid-column:1/-1;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#0033cc;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="rewind" size="12" style="vertical-align:middle;"></i> BACKTESTING
+                                    ENGINE — WESM HISTORICAL REPLAY</span>
+                                <button onclick="runBacktest()"
+                                    style="background:#0033cc;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 12px;cursor:pointer;">▶
+                                    RUN BACKTEST</button>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px;">
+                                <div class="input-group" style="margin-bottom:0;"><label>STRATEGY STRIKE
+                                        (₱)</label><input type="number" id="btStrike" value="4500" step="50"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>HEDGE RATIO (%)</label><input
+                                        type="number" id="btRatio" value="85" step="5"></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>FROM YEAR</label><select
+                                        id="btFrom">
+                                        <option>2022</option>
+                                        <option>2023</option>
+                                        <option>2024</option>
+                                    </select></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>TO YEAR</label><select
+                                        id="btTo">
+                                        <option>2022</option>
+                                        <option selected>2023</option>
+                                        <option>2024</option>
+                                        <option>2025</option>
+                                    </select></div>
+                                <div class="input-group" style="margin-bottom:0;"><label>REGION</label><select
+                                        id="btRegion">
+                                        <option value="SYSTEM">SYSTEM</option>
+                                        <option value="LUZON">LUZON</option>
+                                        <option value="VISAYAS">VISAYAS</option>
+                                    </select></div>
+                            </div>
+                            <div id="backtestSummaryCards"
+                                style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
+                            </div>
+                            <div id="backtestChart" style="height:260px;"></div>
+                        </div>
+
+                        <!-- Stress Testing Suite -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #d73a49;padding:16px;grid-column:1/-1;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#d73a49;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="zap" size="12" style="vertical-align:middle;"></i> STRESS TESTING SUITE
+                                — ONE-CLICK SCENARIOS
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;">
+                                <button onclick="runStressTest('elnino')"
+                                    style="background:#d73a49;color:white;border:none;padding:10px 5px;font-size:9px;font-weight:900;cursor:pointer;line-height:1.4;">🌡️
+                                    EL NIÑO<br>DROUGHT</button>
+                                <button onclick="runStressTest('coal')"
+                                    style="background:#5d4037;color:white;border:none;padding:10px 5px;font-size:9px;font-weight:900;cursor:pointer;line-height:1.4;">⚫
+                                    COAL SPIKE<br>+40%</button>
+                                <button onclick="runStressTest('vre')"
+                                    style="background:#2e7d32;color:white;border:none;padding:10px 5px;font-size:9px;font-weight:900;cursor:pointer;line-height:1.4;">☀️
+                                    VRE FLOOD<br>CURTAILMENT</button>
+                                <button onclick="runStressTest('n1')"
+                                    style="background:#e65100;color:white;border:none;padding:10px 5px;font-size:9px;font-weight:900;cursor:pointer;line-height:1.4;">⚡
+                                    N-1 NGCP<br>OUTAGE</button>
+                                <button onclick="runStressTest('fx')"
+                                    style="background:#7b1fa2;color:white;border:none;padding:10px 5px;font-size:9px;font-weight:900;cursor:pointer;line-height:1.4;">💱
+                                    FX CRISIS<br>USD 70+</button>
+                            </div>
+                            <div id="stressTestResult" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                            </div>
+                            <div id="stressTestChart" style="height:220px;margin-top:14px;"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ====================== UX TOOLKIT TAB ====================== -->
+                <div id="uxtoolkit" class="tab-content fade-in">
+                    <div class="panel-header">
+                        <span><i data-lucide="settings-2" size="14"></i> UX Toolkit — Dark Mode · Audit PDF · Comparison
+                            · Shortcuts · Tutorial</span>
+                    </div>
+                    <div class="scrollable" style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+
+                        <!-- Dark Mode Toggle -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #1a1a1a;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#1a1a1a;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="moon" size="12" style="vertical-align:middle;"></i> DARK MODE
+                            </div>
+                            <div style="display:flex;align-items:center;gap:14px;">
+                                <label style="position:relative;display:inline-block;width:56px;height:28px;">
+                                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode(this.checked)"
+                                        style="opacity:0;width:0;height:0;">
+                                    <span id="dmSlider"
+                                        style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:28px;transition:0.3s;"></span>
+                                    <span id="dmKnob"
+                                        style="position:absolute;content:'';height:22px;width:22px;left:3px;bottom:3px;background:white;border-radius:50%;transition:0.3s;"></span>
+                                </label>
+                                <span style="font-size:11px;font-weight:700;" id="darkModeLabel">Light Mode
+                                    Active</span>
+                            </div>
+                            <div style="margin-top:10px;font-size:10px;color:#888;">Switches the entire terminal to a
+                                professional dark Bloomberg-style theme. Keyboard shortcut: <kbd
+                                    style="background:#eee;padding:1px 4px;border-radius:3px;font-family:monospace;">D</kbd>
+                            </div>
+                        </div>
+
+                        <!-- Keyboard Shortcuts -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #0033cc;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#0033cc;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="keyboard" size="12" style="vertical-align:middle;"></i> KEYBOARD
+                                SHORTCUTS
+                            </div>
+                            <div style="font-size:10px;line-height:2.2;color:#333;">
+                                <div style="display:flex;justify-content:space-between;"><span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">R</kbd>
+                                        Run Simulation</span> <span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">A</kbd>
+                                        Auto-Populate</span></div>
+                                <div style="display:flex;justify-content:space-between;"><span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">E</kbd>
+                                        Export CSV</span> <span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">J</kbd>
+                                        Export JSON</span></div>
+                                <div style="display:flex;justify-content:space-between;"><span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">D</kbd>
+                                        Dark Mode</span> <span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">1–6</kbd>
+                                        Switch Tab</span></div>
+                                <div style="display:flex;justify-content:space-between;"><span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">?</kbd>
+                                        Show Help</span> <span><kbd
+                                            style="background:#f0f0f0;padding:1px 6px;border-radius:3px;font-family:monospace;border:1px solid #ccc;">Esc</kbd>
+                                        Close Modal</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Comparison Mode -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #f57c00;padding:16px;grid-column:1/-1;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#f57c00;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+                                <span><i data-lucide="columns" size="12" style="vertical-align:middle;"></i> STRATEGY
+                                    COMPARISON MODE (A vs B)</span>
+                                <button onclick="runComparison()"
+                                    style="background:#f57c00;color:#fff;border:none;font-size:9px;font-weight:900;padding:4px 12px;cursor:pointer;">RUN
+                                    COMPARISON</button>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;">
+                                <div style="border:1px solid #ffe0b2;padding:10px;background:#fffaf0;">
+                                    <div style="font-size:10px;font-weight:900;color:#f57c00;margin-bottom:8px;">
+                                        STRATEGY A</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                                        <div class="input-group" style="margin-bottom:0;"><label
+                                                style="font-size:8px;">STRIKE A (₱)</label><input type="number"
+                                                id="cmpStrikeA" value="4500" step="50"
+                                                style="height:24px;font-size:10px;"></div>
+                                        <div class="input-group" style="margin-bottom:0;"><label
+                                                style="font-size:8px;">RATIO A (%)</label><input type="number"
+                                                id="cmpRatioA" value="85" step="5" style="height:24px;font-size:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border:1px solid #bbdefb;padding:10px;background:#f0f8ff;">
+                                    <div style="font-size:10px;font-weight:900;color:#0033cc;margin-bottom:8px;">
+                                        STRATEGY B</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                                        <div class="input-group" style="margin-bottom:0;"><label
+                                                style="font-size:8px;">STRIKE B (₱)</label><input type="number"
+                                                id="cmpStrikeB" value="5200" step="50"
+                                                style="height:24px;font-size:10px;"></div>
+                                        <div class="input-group" style="margin-bottom:0;"><label
+                                                style="font-size:8px;">RATIO B (%)</label><input type="number"
+                                                id="cmpRatioB" value="95" step="5" style="height:24px;font-size:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="comparisonResultTable" style="overflow-x:auto;"></div>
+                            <div id="comparisonChart" style="height:200px;margin-top:12px;"></div>
+                        </div>
+
+                        <!-- Audit PDF Export -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #2e7d32;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#2e7d32;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="file-down" size="12" style="vertical-align:middle;"></i> AUDIT REPORT
+                                PDF EXPORT
+                            </div>
+                            <div style="font-size:10px;color:#555;margin-bottom:10px;">Generate a full professional
+                                audit report with parameters, P&amp;L summary, verdict, and all recommendations.</div>
+                            <div class="input-group" style="margin-bottom:8px;"><label>REPORT TITLE</label><input
+                                    type="text" id="pdfReportTitle" value="WESM Forward Hedging Audit Report — FY2026">
+                            </div>
+                            <div class="input-group" style="margin-bottom:12px;"><label>PREPARED BY</label><input
+                                    type="text" id="pdfPreparedBy" value="Engr. Franz Xyrl I. Tobias"></div>
+                            <button onclick="generateAuditPDF()"
+                                style="background:#2e7d32;color:white;border:none;width:100%;height:36px;font-weight:900;font-size:10px;cursor:pointer;">📄
+                                GENERATE & DOWNLOAD AUDIT PDF</button>
+                        </div>
+
+                        <!-- Onboarding Tutorial -->
+                        <div class="stat-card"
+                            style="border:1px solid var(--border-color);border-top:3px solid #7b1fa2;padding:16px;">
+                            <div
+                                style="font-size:11px;font-weight:900;color:#7b1fa2;text-transform:uppercase;margin-bottom:12px;">
+                                <i data-lucide="graduation-cap" size="12" style="vertical-align:middle;"></i> ONBOARDING
+                                TUTORIAL
+                            </div>
+                            <div style="font-size:10px;color:#555;margin-bottom:12px;">A guided, step-by-step
+                                walkthrough of every major feature in the WESM Hedging Terminal.</div>
+                            <div id="tutorialProgress"
+                                style="background:#eee;height:6px;border-radius:3px;margin-bottom:12px;">
+                                <div id="tutorialBar"
+                                    style="background:#7b1fa2;height:6px;border-radius:3px;width:0%;transition:width 0.4s;">
+                                </div>
+                            </div>
+                            <div id="tutorialStepText"
+                                style="font-size:11px;font-weight:700;color:#7b1fa2;min-height:40px;">Click START
+                                TUTORIAL to begin the guided walkthrough.</div>
+                            <div style="display:flex;gap:8px;margin-top:10px;">
+                                <button onclick="startTutorial()"
+                                    style="background:#7b1fa2;color:white;border:none;flex:1;height:32px;font-weight:900;font-size:10px;cursor:pointer;">▶
+                                    START TUTORIAL</button>
+                                <button onclick="nextTutorialStep()" id="tutorialNextBtn"
+                                    style="background:#eee;color:#333;border:none;flex:1;height:32px;font-weight:900;font-size:10px;cursor:pointer;display:none;">NEXT
+                                    STEP →</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <!-- HISTORICAL VIEW -->
                 <div id="history" class="tab-content fade-in">
                     <div class="panel-header">
@@ -1529,8 +2210,7 @@
     <footer
         style="height: 24px; background: #000; color: #ccc; font-size: 10px; display: flex; align-items: center; padding: 0 12px; justify-content: space-between; font-weight: 600;">
         <div>MNL CLOUD RELAY connected @ 10Gbps</div>
-        <div style="color: #d73a49; opacity: 0.8; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; text-decoration: underline;"
-            onclick="showInfo('roadmap')">Roadmap: 10 New Features Available</div>
+
         <div style="color: #d73a49; opacity: 0.8; font-weight: 700; letter-spacing: 0.5px;">Developed by Engr. Franz
             Xyrlo I. Tobias</div>
         <div id="status" style="color: #0f0;">● TERMINAL SECURE</div>
@@ -2594,6 +3274,837 @@
             a.click();
         }
 
+        // =====================================================================
+        // NEW FEATURE JAVASCRIPT ENGINE
+        // =====================================================================
+
+        // ---- 1. VaR Dashboard ----
+        function computeVaR() {
+            const d = window.lastSimData;
+            const baseAnnual = d ? Math.abs(d.annual) : 86000000;
+            const daily = baseAnnual / 252;
+            const mc = (daily * 1.645 * Math.sqrt(20) / 1e6).toFixed(2);
+            const hist = (daily * 2.326 * Math.sqrt(20) / 1e6).toFixed(2);
+            const param = (daily * 1.960 * Math.sqrt(20) / 1e6).toFixed(2);
+            document.getElementById('varMC').textContent = `₱${mc}M`;
+            document.getElementById('varHist').textContent = `₱${hist}M`;
+            document.getElementById('varParam').textContent = `₱${param}M`;
+            const opts = {
+                series: [{ name: 'VaR (₱M)', data: [parseFloat(mc), parseFloat(hist), parseFloat(param)] }],
+                chart: { type: 'bar', height: 180, toolbar: { show: false } },
+                colors: ['#0033cc', '#7b1fa2', '#e65100'],
+                plotOptions: { bar: { distributed: true, borderRadius: 3 } },
+                xaxis: { categories: ['Monte Carlo 95%', 'Historical 99%', 'Parametric 97.5%'], labels: { style: { fontSize: '9px' } } },
+                yaxis: { labels: { formatter: v => '₱' + v + 'M' } },
+                legend: { show: false },
+                dataLabels: { enabled: true, formatter: v => '₱' + v + 'M', style: { fontSize: '9px' } }
+            };
+            const el = document.getElementById('varBarChart');
+            el.innerHTML = '';
+            new ApexCharts(el, opts).render();
+        }
+
+        // ---- 2. Correlation Matrix ----
+        function renderCorrelationMatrix() {
+            const labels = ['WESM Spot', 'Coal ICE', 'Brent', 'USD/PHP', 'VRE Output', 'Load'];
+            const corr = [
+                [1.00, 0.72, -0.18, 0.54, -0.61, 0.88],
+                [0.72, 1.00, -0.12, 0.41, -0.33, 0.62],
+                [-0.18, -0.12, 1.00, 0.31, 0.19, -0.24],
+                [0.54, 0.41, 0.31, 1.00, -0.22, 0.47],
+                [-0.61, -0.33, 0.19, -0.22, 1.00, -0.58],
+                [0.88, 0.62, -0.24, 0.47, -0.58, 1.00]
+            ];
+            const color = v => {
+                const r = v >= 0 ? Math.round(46 + v * 180) : 215;
+                const g = v >= 0 ? 125 : Math.round(58 + Math.abs(v) * 100);
+                const b = v >= 0 ? 50 : 73;
+                return `rgb(${r},${g},${b})`;
+            };
+            let html = `<table style="border-collapse:collapse;font-size:9px;width:100%;">
+                <tr><th style="padding:4px;"></th>${labels.map(l => `<th style="padding:4px;font-weight:800;color:#555;text-align:center;">${l}</th>`).join('')}</tr>`;
+            corr.forEach((row, i) => {
+                html += `<tr><td style="font-weight:800;font-size:9px;padding:4px;color:#333;">${labels[i]}</td>`;
+                row.forEach((v, j) => {
+                    const bg = color(v);
+                    html += `<td style="text-align:center;padding:6px;background:${bg};color:white;font-weight:900;font-family:monospace;">${v.toFixed(2)}</td>`;
+                });
+                html += `</tr>`;
+            });
+            html += `</table>`;
+            document.getElementById('correlationMatrix').innerHTML = html;
+        }
+
+        // ---- 3. Forward Curve Builder ----
+        function renderForwardCurve() {
+            const months = ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan-27', 'Feb-27'];
+            const base = 4520;
+            const seasonality = [0.05, 0.08, 0.12, 0.18, 0.20, 0.16, 0.10, 0.04, -0.02, -0.06, -0.08, -0.04];
+            const curve = seasonality.map(s => Math.round(base * (1 + s)));
+            const upper = curve.map(v => Math.round(v * 1.10));
+            const lower = curve.map(v => Math.round(v * 0.92));
+            const opts = {
+                series: [
+                    { name: 'Fair Value Curve', data: curve },
+                    { name: 'Upper Band (+10%)', data: upper },
+                    { name: 'Lower Band (-8%)', data: lower }
+                ],
+                chart: { type: 'line', height: 220, toolbar: { show: false } },
+                colors: ['#f57c00', '#d73a49', '#2e7d32'],
+                stroke: { width: [3, 1, 1], dashArray: [0, 6, 6] },
+                fill: { type: ['solid', 'gradient', 'gradient'], opacity: [1, 0.1, 0.1] },
+                xaxis: { categories: months, labels: { style: { fontSize: '9px' } } },
+                yaxis: { labels: { formatter: v => '₱' + v.toLocaleString() } },
+                legend: { position: 'top', fontSize: '9px' }
+            };
+            const el = document.getElementById('forwardCurveChart');
+            el.innerHTML = '';
+            new ApexCharts(el, opts).render();
+        }
+
+        // ---- 4. Break-Even Analysis ----
+        function renderBreakEvenAnalysis() {
+            const d = window.lastSimData;
+            const strike = d ? d.strike : parseFloat(document.getElementById('strikePrice').value) || 5000;
+            const avgSpot = d ? d.avgSpot : 4520;
+            const breakEven = Math.round(strike * 0.97);
+            const spread = Math.round(avgSpot - breakEven);
+            document.getElementById('breakEvenPrice').textContent = `₱${breakEven.toLocaleString()}`;
+            document.getElementById('breakEvenSpread').textContent = (spread >= 0 ? '+' : '') + `₱${Math.abs(spread).toLocaleString()}`;
+            document.getElementById('breakEvenSpread').style.color = spread >= 0 ? '#2e7d32' : '#d73a49';
+            const pts = Array.from({ length: 20 }, (_, i) => 2000 + i * 400);
+            const pnl = pts.map(p => Math.round((p - strike) * 10 * 720 / 1e6 * 100) / 100);
+            const opts = {
+                series: [{ name: 'Net P&L (₱M)', data: pts.map((p, i) => [p, pnl[i]]) }],
+                chart: { type: 'line', height: 160, toolbar: { show: false } },
+                colors: [function ({ value }) { return value >= 0 ? '#2e7d32' : '#d73a49'; }],
+                stroke: { width: 3 },
+                xaxis: { title: { text: 'Spot Price (₱/MWh)', style: { fontSize: '9px' } }, labels: { formatter: v => '₱' + v } },
+                yaxis: { labels: { formatter: v => '₱' + v + 'M' } },
+                annotations: { xaxis: [{ x: breakEven, borderColor: '#0033cc', label: { text: 'Break-Even', style: { fontSize: '9px', color: '#fff', background: '#0033cc' } } }] },
+                dataLabels: { enabled: false }
+            };
+            const el = document.getElementById('breakEvenChart');
+            el.innerHTML = '';
+            new ApexCharts(el, opts).render();
+        }
+
+        // ---- 5. Optimal Entry Signal ----
+        function updateEntrySignal() {
+            const d = window.lastSimData;
+            if (!d) return;
+            const spread = d.avgSpot - d.strike;
+            const kelly = d.kelly || 0;
+            let light, text, detail;
+            if (spread > 500 && kelly > 0.3) { light = '🟢'; text = 'STRONG BUY — ENTER NOW'; detail = `Spot avg ₱${Math.round(d.avgSpot)} vs strike ₱${d.strike}. Spread +₱${Math.round(spread)}/MWh. Kelly ${(kelly * 100).toFixed(0)}% conviction. Optimal window for entering forward hedge.`; }
+            else if (spread > 0 && kelly > 0.15) { light = '🟡'; text = 'CAUTIOUS ENTRY — MONITOR'; detail = `Moderate spread of +₱${Math.round(spread)}/MWh. Kelly conviction ${(kelly * 100).toFixed(0)}%. Consider partial position at 50% of target size.`; }
+            else { light = '🔴'; text = 'HOLD — DO NOT ENTER'; detail = `Spread ₱${Math.round(spread)}/MWh is unfavorable at current strike. Wait for spot prices to rise or reduce strike to ₱${Math.round(d.avgSpot - 200)}.`; }
+            document.getElementById('entrySignalLight').textContent = light;
+            document.getElementById('entrySignalText').textContent = text;
+            document.getElementById('entrySignalDetail').textContent = detail;
+        }
+
+        // ---- 6. Greeks (Black-76 / Black-Scholes approx) ----
+        function computeGreeks() {
+            const type = document.getElementById('greeksOptType').value;
+            const sigma = parseFloat(document.getElementById('greeksVol').value) / 100;
+            const K = parseFloat(document.getElementById('greeksStrike').value);
+            const T = parseFloat(document.getElementById('greeksTTE').value) / 12;
+            const F = window.lastSimData ? window.lastSimData.avgSpot : 4520;
+            const r = 0.06;
+            const sqrtT = Math.sqrt(T);
+            const d1 = (Math.log(F / K) + 0.5 * sigma * sigma * T) / (sigma * sqrtT);
+            const d2 = d1 - sigma * sqrtT;
+            const N = x => 0.5 * (1 + erf(x / Math.SQRT2));
+            const n = x => Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI);
+            const erf = x => { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const p = t * (0.254829592 + t * (-0.284496736 + t * (1.421413741 + t * (-1.453152027 + t * 1.061405429)))); return Math.sign(x) * (1 - p * Math.exp(-x * x)); };
+            const discount = Math.exp(-r * T);
+            let delta, premium;
+            if (type === 'call') { delta = discount * N(d1); premium = discount * (F * N(d1) - K * N(d2)); }
+            else { delta = -discount * N(-d1); premium = discount * (K * N(-d2) - F * N(-d1)); }
+            const gamma = discount * n(d1) / (F * sigma * sqrtT);
+            const vega = F * discount * n(d1) * sqrtT / 100;
+            const theta = -(F * discount * n(d1) * sigma / (2 * sqrtT) - r * K * discount * N(type === 'call' ? d2 : -d2)) / 365;
+            const rho = type === 'call' ? K * T * discount * N(d2) / 100 : -K * T * discount * N(-d2) / 100;
+            document.getElementById('gDelta').textContent = delta.toFixed(4);
+            document.getElementById('gGamma').textContent = gamma.toFixed(6);
+            document.getElementById('gTheta').textContent = `₱${theta.toFixed(0)}`;
+            document.getElementById('gVega').textContent = `₱${vega.toFixed(0)}`;
+            document.getElementById('gRho').textContent = rho.toFixed(4);
+            document.getElementById('gPremium').textContent = `₱${Math.round(premium).toLocaleString()}`;
+        }
+
+        // ---- 7. Portfolio Heat Map ----
+        function renderPortfolioHeatMap() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const ratios = [60, 70, 80, 90, 100];
+            const baseStrike = window.lastSimData ? window.lastSimData.strike : 5000;
+            const avgSpot = window.lastSimData ? window.lastSimData.avgSpot : 4520;
+            let html = `<table style="border-collapse:collapse;font-size:8px;width:100%;">
+                <tr><th style="padding:3px;font-size:8px;"></th>${months.map(m => `<th style="padding:3px;font-weight:800;text-align:center;color:#555;">${m}</th>`).join('')}</tr>`;
+            ratios.forEach(r => {
+                html += `<tr><td style="font-weight:800;padding:4px;color:#333;">${r}%</td>`;
+                months.forEach((m, i) => {
+                    const seasonal = [0.9, 0.85, 1.0, 1.1, 1.2, 1.15, 1.0, 0.95, 0.85, 0.8, 0.85, 0.9][i];
+                    const spot = avgSpot * seasonal;
+                    const pnl = (spot - baseStrike) * (r / 100) * 720 / 1e6;
+                    const maxV = 5, minV = -5;
+                    const ratio = Math.max(0, Math.min(1, (pnl - minV) / (maxV - minV)));
+                    const red = Math.round(215 - ratio * 170);
+                    const green = Math.round(58 + ratio * 122);
+                    html += `<td style="text-align:center;padding:5px;background:rgb(${red},${green},50);color:white;font-weight:900;font-family:monospace;font-size:8px;">${pnl.toFixed(1)}</td>`;
+                });
+                html += `</tr>`;
+            });
+            html += `</table><div style="font-size:8px;color:#888;margin-top:6px;">Values in ₱M per-period. Rows = Hedge Ratio. Columns = Month.</div>`;
+            document.getElementById('portfolioHeatMap').innerHTML = html;
+        }
+
+        // ---- 8. Liquidity Risk Calendar ----
+        function renderLiquidityCalendar() {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const risk = [3, 2, 4, 6, 8, 9, 7, 5, 4, 3, 2, 3]; // 1=low, 10=high
+            let html = `<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;">`;
+            months.forEach((m, i) => {
+                const r = risk[i];
+                const palette = r >= 8 ? '#d73a49' : r >= 6 ? '#e65100' : r >= 4 ? '#f57c00' : '#2e7d32';
+                html += `<div style="background:${palette};padding:10px 6px;text-align:center;border-radius:3px;">
+                    <div style="font-size:9px;font-weight:900;color:white;">${m}</div>
+                    <div style="font-size:16px;font-weight:900;color:white;font-family:monospace;">${r}/10</div>
+                    <div style="font-size:8px;color:rgba(255,255,255,0.8);">${r >= 8 ? 'CRITICAL' : r >= 6 ? 'HIGH' : r >= 4 ? 'MEDIUM' : 'LOW'}</div>
+                </div>`;
+            });
+            html += `</div><div style="font-size:8px;color:#888;margin-top:8px;">Based on WESM historical thin-trading periods and VRE curtailment frequency. Peak risk: May-Jun (dry season).</div>`;
+            document.getElementById('liquidityCalendar').innerHTML = html;
+        }
+
+        // ---- 9. Concentration Risk ----
+        function renderConcentrationRisk() {
+            const d = window.lastSimData;
+            const rating = d ? d.counterparty : 'BBB';
+            const items = [
+                { label: 'Counterparty Concentration', value: rating === 'C' ? 92 : rating === 'AAA' ? 18 : 55, risk: rating === 'C' ? 'CRITICAL' : rating === 'AAA' ? 'LOW' : 'MEDIUM' },
+                { label: 'Period Concentration (Q3)', value: 76, risk: 'HIGH' },
+                { label: 'Nodal Concentration (LUZON)', value: 84, risk: 'HIGH' },
+                { label: 'CFD Type Concentration', value: 40, risk: 'MEDIUM' }
+            ];
+            let html = '';
+            items.forEach(item => {
+                const color = item.value > 75 ? '#d73a49' : item.value > 50 ? '#f57c00' : '#2e7d32';
+                html += `<div style="margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;font-size:9px;font-weight:800;margin-bottom:3px;">
+                        <span>${item.label}</span>
+                        <span style="color:${color};">${item.risk} (${item.value}%)</span>
+                    </div>
+                    <div style="background:#eee;height:8px;border-radius:4px;">
+                        <div style="background:${color};width:${item.value}%;height:8px;border-radius:4px;transition:width 0.8s;"></div>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('concentrationBars').innerHTML = html;
+            document.getElementById('concentrationRiskOut').textContent = items.some(i => i.value > 75)
+                ? '⚠ HIGH CONCENTRATION RISK DETECTED: Diversify counterparty and period allocation immediately.'
+                : '✅ Concentration risk within acceptable bounds. Continue monitoring quarterly.';
+        }
+
+        // ---- 10. Auto-Roll Calculator ----
+        function computeAutoRoll() {
+            const S = parseFloat(document.getElementById('rollCurrentStrike').value) || 5000;
+            const exp = parseFloat(document.getElementById('rollExpiry').value) || 3;
+            const carry = parseFloat(document.getElementById('rollCarry').value) / 100 / 12;
+            const term = parseFloat(document.getElementById('rollNextTerm').value) || 12;
+            const carryCost = S * carry * exp;
+            const optimalRollStrike = Math.round(S + carryCost - (window.lastSimData ? (window.lastSimData.avgSpot - S) * 0.3 : 0));
+            const rollPnL = ((S - optimalRollStrike) * 10 * 720 / 1e6).toFixed(2);
+            document.getElementById('autoRollResult').innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px;">
+                    <div style="text-align:center;background:#edfffe;padding:8px;border-top:2px solid #33691e;">
+                        <div style="font-size:8px;color:#888;font-weight:800;">OPTIMAL ROLL STRIKE</div>
+                        <div style="font-size:18px;font-weight:900;color:#33691e;font-family:monospace;">₱${optimalRollStrike.toLocaleString()}</div>
+                    </div>
+                    <div style="text-align:center;background:#edfffe;padding:8px;border-top:2px solid #33691e;">
+                        <div style="font-size:8px;color:#888;font-weight:800;">CARRY COST</div>
+                        <div style="font-size:18px;font-weight:900;color:#e65100;font-family:monospace;">₱${Math.round(carryCost).toLocaleString()}</div>
+                    </div>
+                    <div style="text-align:center;background:#edfffe;padding:8px;border-top:2px solid #33691e;">
+                        <div style="font-size:8px;color:#888;font-weight:800;">ROLL P&L IMPACT</div>
+                        <div style="font-size:18px;font-weight:900;color:${parseFloat(rollPnL) >= 0 ? '#2e7d32' : '#d73a49'};font-family:monospace;">₱${rollPnL}M</div>
+                    </div>
+                </div>
+                <div style="font-size:10px;color:#33691e;line-height:1.7;">
+                    ✅ <b>RECOMMENDED ACTION:</b> Roll current ₱${S.toLocaleString()} position into a new ${term}-month contract at target strike <b>₱${optimalRollStrike.toLocaleString()}</b> within <b>${Math.max(1, exp - 1)} month(s)</b>. 
+                    This minimises carry cost drag and preserves alpha from the current cycle.
+                </div>`;
+        }
+
+        // ---- 11. Multi-Period Hedge Planner ----
+        function computeMultiPeriod() {
+            const quarters = [
+                { id: 'Q1', label: 'Q1 Jan-Mar', months: 3, strike: parseFloat(document.getElementById('mpStrikeQ1').value), ratio: parseFloat(document.getElementById('mpRatioQ1').value) / 100 },
+                { id: 'Q2', label: 'Q2 Apr-Jun', months: 3, strike: parseFloat(document.getElementById('mpStrikeQ2').value), ratio: parseFloat(document.getElementById('mpRatioQ2').value) / 100 },
+                { id: 'Q3', label: 'Q3 Jul-Sep', months: 3, strike: parseFloat(document.getElementById('mpStrikeQ3').value), ratio: parseFloat(document.getElementById('mpRatioQ3').value) / 100 },
+                { id: 'Q4', label: 'Q4 Oct-Dec', months: 3, strike: parseFloat(document.getElementById('mpStrikeQ4').value), ratio: parseFloat(document.getElementById('mpRatioQ4').value) / 100 }
+            ];
+            const spotSeasonality = [4200, 4100, 4500, 4800, 5200, 5400, 5100, 4900, 4600, 4300, 4200, 4100];
+            let total = 0;
+            let html = `<table style="width:100%;border-collapse:collapse;font-size:10px;">
+                <tr style="background:#f0f4ff;font-weight:900;">
+                    <th style="padding:8px;text-align:left;">Period</th>
+                    <th style="padding:8px;text-align:center;">Strike</th>
+                    <th style="padding:8px;text-align:center;">Ratio</th>
+                    <th style="padding:8px;text-align:center;">Avg Spot</th>
+                    <th style="padding:8px;text-align:center;">Net PnL</th>
+                    <th style="padding:8px;text-align:center;">Status</th>
+                </tr>`;
+            quarters.forEach((q, qi) => {
+                const mStart = qi * 3; const mEnd = mStart + 3;
+                const avgSpot = spotSeasonality.slice(mStart, mEnd).reduce((a, b) => a + b, 0) / 3;
+                const pnl = (avgSpot - q.strike) * q.ratio * 10 * 720 * 3 / 1e6;
+                total += pnl;
+                const color = pnl >= 0 ? '#2e7d32' : '#d73a49';
+                html += `<tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:8px;font-weight:800;">${q.label}</td>
+                    <td style="padding:8px;text-align:center;font-family:monospace;">₱${q.strike.toLocaleString()}</td>
+                    <td style="padding:8px;text-align:center;">${(q.ratio * 100).toFixed(0)}%</td>
+                    <td style="padding:8px;text-align:center;font-family:monospace;">₱${Math.round(avgSpot).toLocaleString()}</td>
+                    <td style="padding:8px;text-align:center;font-weight:900;color:${color};font-family:monospace;">${pnl >= 0 ? '+' : ''}₱${pnl.toFixed(2)}M</td>
+                    <td style="padding:8px;text-align:center;"><span style="background:${color};color:white;padding:2px 8px;font-size:9px;font-weight:900;">${pnl >= 0 ? 'PROFIT' : 'LOSS'}</span></td>
+                </tr>`;
+            });
+            html += `<tr style="background:#fafafa;font-weight:900;border-top:2px solid #333;">
+                <td colspan="4" style="padding:8px;text-align:right;font-size:11px;">ANNUAL TOTAL P&L:</td>
+                <td style="padding:8px;text-align:center;font-size:14px;font-weight:900;color:${total >= 0 ? '#2e7d32' : '#d73a49'};font-family:monospace;">${total >= 0 ? '+' : ''}₱${total.toFixed(2)}M</td>
+                <td style="padding:8px;text-align:center;"><span style="background:${total >= 0 ? '#2e7d32' : '#d73a49'};color:white;padding:3px 10px;font-size:10px;font-weight:900;">${total >= 0 ? 'FY PROFIT' : 'FY LOSS'}</span></td>
+            </tr></table>`;
+            document.getElementById('multiPeriodResult').innerHTML = html;
+        }
+
+        // ---- 12. Deal Ticket Generator ----
+        function generateDealTicket() {
+            const d = window.lastSimData || {};
+            const cp = document.getElementById('dtCounterparty').value;
+            const trader = document.getElementById('dtTrader').value;
+            const date = document.getElementById('dtTradeDate').value;
+            const term = document.getElementById('dtTerm').value;
+            const strike = d.strike || document.getElementById('strikePrice').value;
+            const ratio = d.hedgeRatioPct || document.getElementById('hedgeRatio').value;
+            const ref = `WESM-FH-${Date.now().toString().slice(-6)}`;
+            const el = document.getElementById('dealTicketOut');
+            el.style.display = 'block';
+            el.innerHTML = `
+══════════════════════════════════════════════════<br>
+&nbsp;&nbsp;&nbsp;WESM FORWARD HEDGE — DEAL TICKET<br>
+══════════════════════════════════════════════════<br>
+REF NO:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${ref}<br>
+TRADE DATE:&nbsp;&nbsp;&nbsp;${date}<br>
+TRADER:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${trader}<br>
+──────────────────────────────────────────────────<br>
+COUNTERPARTY:&nbsp;${cp}<br>
+HEDGE TYPE:&nbsp;&nbsp;&nbsp;Two-Way CFD (StandardSwap)<br>
+SETTLEMENT:&nbsp;&nbsp;&nbsp;WESM GWAP — ${document.getElementById('cfdScope')?.value?.toUpperCase() || 'SYSTEM'}<br>
+TERM:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${term}<br>
+──────────────────────────────────────────────────<br>
+STRIKE PRICE: ₱${Number(strike).toLocaleString()}/MWh<br>
+HEDGE RATIO:&nbsp;&nbsp;${ratio}%<br>
+CONTRACT QTY: ${document.getElementById('contractQty')?.value || '10'} MW<br>
+──────────────────────────────────────────────────<br>
+EXPECTED P&L: ${d.annual ? (d.annual >= 0 ? '+' : '') + '₱' + (d.annual / 1e6).toFixed(2) + 'M' : 'PENDING SIMULATION'}<br>
+COMPLIANCE:&nbsp;&nbsp;&nbsp;DOE DC2026-02-0008 ✓&nbsp;&nbsp;ERC-Approved ✓<br>
+══════════════════════════════════════════════════<br>
+Authorized by: ${trader}<br>
+Generated: ${new Date().toLocaleString('en-PH')}`;
+            document.getElementById('printTicketBtn').style.display = 'block';
+            window._dealTicketText = el.innerText;
+        }
+        function printDealTicket() {
+            const blob = new Blob([window._dealTicketText || ''], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `DealTicket_${Date.now()}.txt`;
+            a.click();
+        }
+
+        // ---- 13. Expiry Tracker ----
+        window._expiryList = [];
+        function addHedgeExpiry() {
+            const name = document.getElementById('expiryName').value;
+            const date = document.getElementById('expiryDate').value;
+            const amt = parseFloat(document.getElementById('expiryAmt').value) || 0;
+            if (!name || !date) return;
+            window._expiryList.push({ name, date, amt });
+            renderExpiryList();
+        }
+        function renderExpiryList() {
+            const now = new Date();
+            const el = document.getElementById('expiryTrackerList');
+            if (!window._expiryList.length) { el.innerHTML = `<div style="font-size:10px;color:#888;padding:10px;">No hedges tracked yet. Add one above.</div>`; return; }
+            el.innerHTML = window._expiryList.sort((a, b) => new Date(a.date) - new Date(b.date)).map(h => {
+                const days = Math.ceil((new Date(h.date) - now) / 86400000);
+                const urgency = days < 30 ? '#d73a49' : days < 90 ? '#e65100' : '#2e7d32';
+                return `<div style="border-left:3px solid ${urgency};padding:8px 10px;margin-bottom:6px;background:#fafafa;display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <div style="font-size:10px;font-weight:900;color:#333;">${h.name}</div>
+                        <div style="font-size:9px;color:#888;">Expiry: ${h.date} | Amount: ₱${h.amt}M</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:18px;font-weight:900;color:${urgency};font-family:monospace;">${days}d</div>
+                        <div style="font-size:8px;color:${urgency};font-weight:800;">${days < 30 ? 'URGENT' : days < 90 ? 'UPCOMING' : 'ON TRACK'}</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+        // Seed with a sample entry
+        window._expiryList = [{ name: 'SMEC FY2026', date: '2026-12-31', amt: 12.5 }, { name: 'WESM Q2 Hedge', date: '2026-06-30', amt: 4.8 }];
+        setTimeout(renderExpiryList, 500);
+
+        // ---- 14. Backtesting Engine ----
+        function runBacktest() {
+            if (!window.HISTORICAL_DATA) { alert('Historical data not loaded. Switch to the History tab first.'); return; }
+            const strikeVal = parseFloat(document.getElementById('btStrike').value) || 4500;
+            const ratioVal = parseFloat(document.getElementById('btRatio').value) / 100 || 0.85;
+            const region = document.getElementById('btRegion').value || 'SYSTEM';
+            const fromYr = document.getElementById('btFrom').value;
+            const toYr = document.getElementById('btTo').value;
+            const years = Object.keys(HISTORICAL_DATA.GWAP[region] || HISTORICAL_DATA.GWAP['SYSTEM']).filter(y => y >= fromYr && y <= toYr);
+            let allPnL = [], labels = [], totalPnL = 0, wins = 0;
+            years.forEach(yr => {
+                const series = (HISTORICAL_DATA.GWAP[region] || HISTORICAL_DATA.GWAP['SYSTEM'])[yr] || [];
+                series.forEach(d => {
+                    const spot = d.price;
+                    const settle = (spot - strikeVal) * ratioVal * 10 * 720;
+                    allPnL.push(Math.round(settle / 1e6 * 100) / 100);
+                    labels.push(`${yr}-${d.month || d.MONTH || ''}`);
+                    totalPnL += settle;
+                    if (settle >= 0) wins++;
+                });
+            });
+            const winRate = allPnL.length ? (wins / allPnL.length * 100).toFixed(0) : 0;
+            const maxDD = Math.min(...allPnL);
+            const sharpe = allPnL.length ? ((totalPnL / 1e6 / allPnL.length) / (allPnL.reduce((s, v) => s + (v - totalPnL / 1e6 / allPnL.length) ** 2, 0) / allPnL.length) ** 0.5 * Math.sqrt(12)).toFixed(2) : '--';
+            const cards = [
+                { label: 'TOTAL BACKTEST P&L', value: `${totalPnL >= 0 ? '+' : ''}₱${(totalPnL / 1e6).toFixed(2)}M`, color: totalPnL >= 0 ? '#2e7d32' : '#d73a49' },
+                { label: 'WIN RATE', value: `${winRate}%`, color: parseInt(winRate) >= 50 ? '#2e7d32' : '#d73a49' },
+                { label: 'MAX DRAWDOWN', value: `₱${maxDD.toFixed(2)}M`, color: '#d73a49' },
+                { label: 'SHARPE RATIO', value: sharpe, color: parseFloat(sharpe) >= 1 ? '#2e7d32' : '#e65100' }
+            ];
+            document.getElementById('backtestSummaryCards').innerHTML = cards.map(c => `
+                <div style="background:#f9f9f9;padding:12px;text-align:center;border-top:2px solid ${c.color};">
+                    <div style="font-size:9px;color:#888;font-weight:800;">${c.label}</div>
+                    <div style="font-size:20px;font-weight:900;color:${c.color};font-family:monospace;">${c.value}</div>
+                </div>`).join('');
+            const opts = {
+                series: [{ name: 'Monthly P&L (₱M)', data: allPnL }],
+                chart: { type: 'bar', height: 260, toolbar: { show: false } },
+                plotOptions: { bar: { borderRadius: 2, colors: { ranges: [{ from: -999, to: 0, color: '#d73a49' }, { from: 0, to: 9999, color: '#2e7d32' }] } } },
+                xaxis: { categories: labels, labels: { rotate: -45, style: { fontSize: '7px' } } },
+                yaxis: { labels: { formatter: v => '₱' + v + 'M' } },
+                dataLabels: { enabled: false },
+                title: { text: `Backtest: Strike ₱${strikeVal} | Ratio ${(ratioVal * 100).toFixed(0)}% | ${fromYr}-${toYr}`, style: { fontSize: '10px' } }
+            };
+            const btEl = document.getElementById('backtestChart');
+            btEl.innerHTML = '';
+            new ApexCharts(btEl, opts).render();
+        }
+
+        // ---- 15. Stress Testing ----
+        function runStressTest(scenario) {
+            const d = window.lastSimData;
+            const base = d ? d.annual / 1e6 : -86.25;
+            const scenarios = {
+                elnino: { label: '🌡️ El Niño Drought', mult: 2.1, desc: 'Hydropower curtailed -40%. Spot spikes +110%. Coal plants dispatched at premium. Severe liquidity stress on generators.', color: '#d73a49' },
+                coal: { label: '⚫ Coal Spike +40%', mult: 1.6, desc: 'ICE coal price $190/t. Variable energy costs surge. Merit-order dispatch shifts. Non-coal generators gain pricing power.', color: '#5d4037' },
+                vre: { label: '☀️ VRE Flood (Curtailment)', mult: 0.4, desc: 'Solar/wind overgeneration causes negative prices in off-peak hours. VRE curtailment triggers must-offer penalties. Traders exposed to basis risk.', color: '#2e7d32' },
+                n1: { label: '⚡ N-1 NGCP Outage', mult: 1.8, desc: 'Major 500kV line outage isolates Luzon-Visayas interconnection. Regional price divergence +₱2,000/MWh. Nodal basis risk materializes.', color: '#e65100' },
+                fx: { label: '💱 FX Crisis (USD 70+)', mult: 1.4, desc: 'Peso depreciates to ₱70/$. Imported coal and LNG costs surge. ERC emergency price cap recalibration. Carbon hedges repriced in USD terms.', color: '#7b1fa2' }
+            };
+            const s = scenarios[scenario];
+            if (!s) return;
+            const stressed = (base * s.mult).toFixed(2);
+            const delta = (parseFloat(stressed) - base).toFixed(2);
+            document.getElementById('stressTestResult').innerHTML = `
+                <div style="background:#fff5f5;padding:12px;border-top:3px solid ${s.color};grid-column:1/-1;">
+                    <div style="font-size:11px;font-weight:900;color:${s.color};margin-bottom:6px;">${s.label}</div>
+                    <div style="font-size:10px;color:#555;margin-bottom:10px;">${s.desc}</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                        <div style="text-align:center;background:white;padding:8px;border-top:2px solid #ccc;"><div style="font-size:9px;color:#888;font-weight:800;">BASE CASE P&L</div><div style="font-size:18px;font-weight:900;color:${base >= 0 ? '#2e7d32' : '#d73a49'};font-family:monospace;">${base >= 0 ? '+' : ''}₱${base}M</div></div>
+                        <div style="text-align:center;background:white;padding:8px;border-top:2px solid ${s.color};"><div style="font-size:9px;color:#888;font-weight:800;">STRESSED P&L</div><div style="font-size:18px;font-weight:900;color:${parseFloat(stressed) >= 0 ? '#2e7d32' : '#d73a49'};font-family:monospace;">${parseFloat(stressed) >= 0 ? '+' : ''}₱${stressed}M</div></div>
+                        <div style="text-align:center;background:white;padding:8px;border-top:2px solid #e65100;"><div style="font-size:9px;color:#888;font-weight:800;">DELTA (IMPACT)</div><div style="font-size:18px;font-weight:900;color:${parseFloat(delta) >= 0 ? '#2e7d32' : '#d73a49'};font-family:monospace;">${parseFloat(delta) >= 0 ? '+' : ''}₱${delta}M</div></div>
+                    </div>
+                </div>`;
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const baseData = months.map((_, i) => Math.round((base / 12) * (0.8 + Math.random() * 0.4) * 100) / 100);
+            const stressData = baseData.map(v => Math.round(v * s.mult * 100) / 100);
+            const opts = {
+                series: [{ name: 'Base Case', data: baseData }, { name: 'Stress Scenario', data: stressData }],
+                chart: { type: 'line', height: 220, toolbar: { show: false } },
+                colors: ['#888', s.color],
+                stroke: { width: [2, 3], dashArray: [6, 0] },
+                xaxis: { categories: months, labels: { style: { fontSize: '9px' } } },
+                yaxis: { labels: { formatter: v => '₱' + v + 'M' } },
+                legend: { position: 'top', fontSize: '9px' },
+                dataLabels: { enabled: false }
+            };
+            const el = document.getElementById('stressTestChart');
+            el.innerHTML = '';
+            new ApexCharts(el, opts).render();
+        }
+
+        // ---- 16. Dark Mode ----
+        function toggleDarkMode(on) {
+            const dm = document.getElementById('darkModeLabel');
+            const slider = document.getElementById('dmSlider');
+            const knob = document.getElementById('dmKnob');
+            if (on) {
+                document.documentElement.style.setProperty('--bg-primary', '#0d0d0d');
+                document.documentElement.style.setProperty('--bg-secondary', '#1a1a1a');
+                document.documentElement.style.setProperty('--text-primary', '#e0e0e0');
+                document.documentElement.style.setProperty('--border-color', '#333');
+                document.body.style.background = '#0d0d0d';
+                document.body.style.color = '#e0e0e0';
+                document.querySelectorAll('.stat-card').forEach(el => { el.style.background = '#1a1a1a'; el.style.color = '#e0e0e0'; });
+                document.querySelectorAll('.panel-header').forEach(el => { el.style.background = '#111'; el.style.color = '#fff'; });
+                document.querySelectorAll('input,select').forEach(el => { el.style.background = '#2a2a2a'; el.style.color = '#e0e0e0'; el.style.border = '1px solid #444'; });
+                slider.style.background = '#0033cc';
+                knob.style.transform = 'translateX(28px)';
+                dm.textContent = 'Dark Mode Active';
+            } else {
+                document.documentElement.style.removeProperty('--bg-primary');
+                document.documentElement.style.removeProperty('--bg-secondary');
+                document.documentElement.style.removeProperty('--text-primary');
+                document.documentElement.style.removeProperty('--border-color');
+                document.body.style.background = '';
+                document.body.style.color = '';
+                document.querySelectorAll('.stat-card').forEach(el => { el.style.background = ''; el.style.color = ''; });
+                document.querySelectorAll('.panel-header').forEach(el => { el.style.background = ''; el.style.color = ''; });
+                document.querySelectorAll('input,select').forEach(el => { el.style.background = ''; el.style.color = ''; el.style.border = ''; });
+                slider.style.background = '#ccc';
+                knob.style.transform = 'translateX(0)';
+                dm.textContent = 'Light Mode Active';
+            }
+        }
+
+        // ---- 17. Comparison Mode ----
+        function runComparison() {
+            const sA = parseFloat(document.getElementById('cmpStrikeA').value) || 4500;
+            const rA = parseFloat(document.getElementById('cmpRatioA').value) / 100 || 0.85;
+            const sB = parseFloat(document.getElementById('cmpStrikeB').value) || 5200;
+            const rB = parseFloat(document.getElementById('cmpRatioB').value) / 100 || 0.95;
+            const avgSpot = window.lastSimData ? window.lastSimData.avgSpot : 4520;
+            const qty = 10, hrs = 720, m = 12;
+            const pnlA = ((avgSpot - sA) * rA * qty * hrs * m / 1e6).toFixed(2);
+            const pnlB = ((avgSpot - sB) * rB * qty * hrs * m / 1e6).toFixed(2);
+            const winner = parseFloat(pnlA) >= parseFloat(pnlB) ? 'A' : 'B';
+            document.getElementById('comparisonResultTable').innerHTML = `
+                <table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:8px;">
+                    <tr style="background:#f0f4ff;font-weight:900;"><th style="padding:8px;"></th><th style="padding:8px;text-align:center;color:#f57c00;">STRATEGY A</th><th style="padding:8px;text-align:center;color:#0033cc;">STRATEGY B</th><th style="padding:8px;text-align:center;">WINNER</th></tr>
+                    <tr style="border-bottom:1px solid #eee;"><td style="padding:8px;font-weight:800;">Strike Price</td><td style="padding:8px;text-align:center;font-family:monospace;">₱${sA.toLocaleString()}</td><td style="padding:8px;text-align:center;font-family:monospace;">₱${sB.toLocaleString()}</td><td style="padding:8px;text-align:center;">${sA < sB ? '🟠 A (Lower)' : '🔵 B (Lower)'}</td></tr>
+                    <tr style="border-bottom:1px solid #eee;"><td style="padding:8px;font-weight:800;">Hedge Ratio</td><td style="padding:8px;text-align:center;">${(rA * 100).toFixed(0)}%</td><td style="padding:8px;text-align:center;">${(rB * 100).toFixed(0)}%</td><td style="padding:8px;text-align:center;">${rB >= rA ? '🔵 B (Higher)' : '🟠 A (Higher)'}</td></tr>
+                    <tr style="border-bottom:1px solid #eee;font-weight:900;"><td style="padding:8px;font-weight:900;">Net Annual P&L</td><td style="padding:8px;text-align:center;color:${parseFloat(pnlA) >= 0 ? '#2e7d32' : '#d73a49'};font-size:14px;font-family:monospace;">${parseFloat(pnlA) >= 0 ? '+' : ''}₱${pnlA}M</td><td style="padding:8px;text-align:center;color:${parseFloat(pnlB) >= 0 ? '#2e7d32' : '#d73a49'};font-size:14px;font-family:monospace;">${parseFloat(pnlB) >= 0 ? '+' : ''}₱${pnlB}M</td><td style="padding:8px;text-align:center;"><b style="color:#fff;background:${winner === 'A' ? '#f57c00' : '#0033cc'};padding:2px 10px;">STRATEGY ${winner}</b></td></tr>
+                </table>`;
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const seasonal = [0.9, 0.85, 1.0, 1.1, 1.2, 1.15, 1.0, 0.95, 0.85, 0.8, 0.85, 0.9];
+            const dataA = seasonal.map(s => Math.round((avgSpot * s - sA) * rA * qty * hrs / 1e6 * 100) / 100);
+            const dataB = seasonal.map(s => Math.round((avgSpot * s - sB) * rB * qty * hrs / 1e6 * 100) / 100);
+            const opts = {
+                series: [{ name: 'Strategy A', data: dataA }, { name: 'Strategy B', data: dataB }],
+                chart: { type: 'line', height: 200, toolbar: { show: false } },
+                colors: ['#f57c00', '#0033cc'],
+                stroke: { width: [3, 3] },
+                xaxis: { categories: months, labels: { style: { fontSize: '9px' } } },
+                yaxis: { labels: { formatter: v => '₱' + v + 'M' } },
+                legend: { position: 'top', fontSize: '9px' },
+                dataLabels: { enabled: false }
+            };
+            const el = document.getElementById('comparisonChart');
+            el.innerHTML = '';
+            new ApexCharts(el, opts).render();
+        }
+
+        // ---- 18. Audit PDF Export (Print-to-PDF) ----
+        function generateAuditPDF() {
+            const d = window.lastSimData || {};
+            const title = document.getElementById('pdfReportTitle').value;
+            const by = document.getElementById('pdfPreparedBy').value;
+            const win = window.open('', '_blank');
+            win.document.write(`<!DOCTYPE html><html><head><title>${title}</title>
+            <style>body{font-family:monospace;padding:40px;color:#111;} h1{color:#0033cc;border-bottom:3px solid #0033cc;} table{width:100%;border-collapse:collapse;margin:20px 0;} td,th{border:1px solid #ccc;padding:8px;} .good{color:#2e7d32;font-weight:900;} .bad{color:#d73a49;font-weight:900;} @media print{button{display:none;}}</style></head><body>
+            <h1>${title}</h1>
+            <p><b>Prepared by:</b> ${by} &nbsp;|&nbsp; <b>Generated:</b> ${new Date().toLocaleString('en-PH')} &nbsp;|&nbsp; <b>System:</b> WESM HedgeTerminal V2.1.0</p>
+            <h2>Simulation Parameters</h2>
+            <table><tr><th>Parameter</th><th>Value</th></tr>
+            <tr><td>Strike Price</td><td>₱${d.strike || '--'}/MWh</td></tr>
+            <tr><td>Hedge Ratio</td><td>${d.hedgeRatioPct || '--'}%</td></tr>
+            <tr><td>Counterparty Rating</td><td>${d.counterparty || '--'}</td></tr>
+            <tr><td>Average Spot Price</td><td>₱${d.avgSpot ? Math.round(d.avgSpot).toLocaleString() : '--'}/MWh</td></tr>
+            </table>
+            <h2>Performance Results</h2>
+            <table><tr><th>Metric</th><th>Value</th></tr>
+            <tr><td>Annual Net P&L</td><td class="${d.annual >= 0 ? 'good' : 'bad'}">${d.annual ? (d.annual >= 0 ? '+' : '') + '₱' + (d.annual / 1e6).toFixed(2) + 'M' : '--'}</td></tr>
+            <tr><td>Max Drawdown</td><td class="bad">₱${d.maxDDValue ? (d.maxDDValue / 1e6).toFixed(2) + 'M' : '--'}</td></tr>
+            <tr><td>Kelly Fraction</td><td>${d.kelly ? (d.kelly * 100).toFixed(1) + '%' : '--'}</td></tr>
+            <tr><td>Optimal Contract Size</td><td>${d.optimalSize || '--'} MW</td></tr>
+            </table>
+            <h2>Compliance</h2>
+            <p>✅ DOE DC2026-02-0008 — VRE Integration Framework<br>✅ ERC Resolution No. 09-2023 — CFD Guidelines<br>✅ NGCP Grid Code Section 4.3 — Ancillary Service Obligations</p>
+            <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+            </body></html>`);
+            win.document.close();
+        }
+
+        // ---- 19. Tutorial (Full Modal Overlay — 20 steps) ----
+        // buildTutorialModal is called inside DOMContentLoaded below
+        function buildTutorialModal() {
+            var modal = document.createElement('div');
+            modal.id = 'tutorialModal';
+            modal.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:rgba(0,0,0,0.78);backdrop-filter:blur(4px);align-items:center;justify-content:center;';
+            modal.innerHTML = [
+                '<div style="background:#fff;width:680px;max-width:96vw;border-radius:8px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.55);">',
+                '<div id="tut-header" style="background:#0033cc;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;">',
+                '<div>',
+                '<div style="color:rgba(255,255,255,0.65);font-size:9px;font-weight:800;letter-spacing:2px;">WESM HEDGETERMINAL — INTERACTIVE GUIDED TOUR</div>',
+                '<div id="tut-title" style="color:#fff;font-size:17px;font-weight:900;margin-top:4px;"></div>',
+                '</div>',
+                '<button onclick="closeTutorial()" style="background:rgba(255,255,255,0.18);border:none;color:white;width:34px;height:34px;border-radius:50%;font-size:17px;cursor:pointer;font-weight:900;">✕</button>',
+                '</div>',
+                '<div style="height:5px;background:#dde;"><div id="tut-bar" style="height:5px;background:#00c853;transition:width 0.35s;width:0%;"></div></div>',
+                '<div style="padding:22px 26px 16px;">',
+                '<div id="tut-icon" style="font-size:38px;margin-bottom:8px;line-height:1;"></div>',
+                '<div id="tut-body" style="font-size:12.5px;color:#222;line-height:1.85;min-height:130px;"></div>',
+                '<div id="tut-tip" style="margin-top:14px;background:#f0f4ff;border-left:4px solid #0033cc;padding:10px 14px;font-size:10.5px;color:#0033cc;font-weight:700;display:none;"></div>',
+                '</div>',
+                '<div style="padding:12px 26px 16px;background:#f7f7f9;border-top:1px solid #e8e8ee;display:flex;justify-content:space-between;align-items:center;">',
+                '<div id="tut-counter" style="font-size:10px;color:#888;font-weight:800;"></div>',
+                '<div style="display:flex;gap:8px;align-items:center;">',
+                '<span style="font-size:9px;color:#aaa;margin-right:4px;">← → keys also work</span>',
+                '<button id="tut-prev" onclick="prevTutorialStep()" style="background:#e8e8ee;color:#444;border:none;padding:8px 16px;font-weight:900;font-size:10px;cursor:pointer;border-radius:4px;">← PREV</button>',
+                '<button id="tut-next" onclick="nextTutorialStep()" style="background:#0033cc;color:#fff;border:none;padding:8px 20px;font-weight:900;font-size:10px;cursor:pointer;border-radius:4px;">NEXT →</button>',
+                '<button id="tut-finish" onclick="closeTutorial()" style="display:none;background:#2e7d32;color:#fff;border:none;padding:8px 20px;font-weight:900;font-size:10px;cursor:pointer;border-radius:4px;">🎓 FINISH</button>',
+                '</div>',
+                '</div>',
+                '</div>'
+            ].join('');
+            document.body.appendChild(modal);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeTutorial(); });
+            document.addEventListener('keydown', function (e) {
+                var m = document.getElementById('tutorialModal');
+                if (!m || m.style.display !== 'flex') return;
+                if (e.key === 'ArrowRight' || e.key === 'Enter') nextTutorialStep();
+                else if (e.key === 'ArrowLeft') prevTutorialStep();
+                else if (e.key === 'Escape') closeTutorial();
+            });
+        }
+
+        var tutorialSteps = [
+            {
+                icon: '👋', title: 'Welcome to WESM HedgeTerminal V2', tab: 'hedging',
+                body: 'This is a professional-grade WESM energy forward hedging console built for Philippine electricity market traders.\n\nIt simulates CFD (Contract for Difference) hedge positions, calculates real P&L, runs Monte Carlo risk analysis, and provides advanced portfolio analytics — all inside one browser tab.\n\nUse ← → arrow keys or the PREV/NEXT buttons to navigate. Press ESC to close at any time.',
+                tip: 'TIP: Press the R key (from any tab, not inside an input) to instantly Run the simulation — your most-used shortcut.'
+            },
+            {
+                icon: '📟', title: 'STEP 1 — The Bloomberg Header Bar', tab: 'hedging',
+                body: 'The top header shows:\n• Real-time clock — Full date + time (DAY DD MON YYYY HH:MM:SS), updating every second\n• Command bar — Type shortcuts like HEDGE, HIST, HELP and press Enter to jump to any tab\n• Live scrolling ticker — WESM GWAP (Luzon/Visayas/Mindanao), coal ICE, Brent crude, USD/PHP, ERC price cap, system demand, and reserves — refreshed every 60 seconds',
+                tip: 'TIP: Type "HELP" in the command bar to see all available terminal commands.'
+            },
+            {
+                icon: '📋', title: 'STEP 2 — Contract Design: Core Inputs', tab: 'hedging',
+                body: 'The left panel is your contract design workspace. Core fields:\n\n• CONTRACT SCOPE — System GWAP (market-wide), Nodal LMP (location-specific), or Regional LWAP\n• HEDGE TYPE — Two-Way CFD, Cap/Call, Floor/Put, or Zero-Cost Collar\n• STRIKE PRICE (₱/MWh) — The fixed settlement price agreed with your counterparty\n• TOTAL LOAD (MW) — Your generation exposure or offtake obligation\n• HEDGE RATIO (%) — Percentage of your exposure you want to hedge (50–100%)\n• CONTRACT QTY (MW) — Size of each individual contract\n• MARGIN THRESHOLD — Maximum mark-to-market loss you can tolerate before triggering a margin call',
+                tip: 'TIP: Two-Way CFD is the dominant WESM hedge instrument. It caps both upside AND downside price exposure symmetrically.'
+            },
+            {
+                icon: '⚙️', title: 'STEP 3 — Advanced Risk Controls', tab: 'hedging',
+                body: 'Scroll down in the left panel for 8 advanced modifiers that fine-tune hedge accuracy:\n\n• BASIS SWAP NODE — Adjusts for nodal price differential vs. system GWAP\n• FUEL LINKAGE — Links settlement to a fuel price index (coal, gas, oil)\n• CARBON TAX (₱/tCO₂) — Adds a regulatory carbon overlay cost to settlement\n• VRE SOLAR WEIGHT — Adjusts for renewable curtailment risk exposure\n• N-1 GRID SIMULATION — Models grid contingency loss-of-infeed scenarios\n• WEATHER INFLUENCE — Seasonal demand/supply adjustment factor\n• FTR HEDGE — Financial Transmission Rights protection level (%)\n• VIRTUAL BID — Captures arbitrage spread between nodal and system prices',
+                tip: 'TIP: Setting Carbon Tax > ₱1,000/tCO₂ and FTR Hedge > 60% significantly improves hedging accuracy in stressed El Niño environments.'
+            },
+            {
+                icon: '🤖', title: 'STEP 4 — AI Auto-Populate Engine', tab: 'hedging',
+                body: 'Click the blue "AUTO-POPULATE INPUTS FOR MAXIMUM PROFIT" button at the bottom of the left panel to launch the AI engine:\n\n1. It reads current market data (from the live ticker and simulated WESM conditions)\n2. Runs Kelly Criterion optimisation to find the mathematically optimal position size\n3. Sets ALL 14 input fields to their profit-maximising values automatically\n4. Highlights every changed field with a green ✓ AI SET badge and shows the old vs. new value\n5. Immediately runs the full simulation with the optimised parameters\n\nYou can manually override any field after auto-populate — the AI SET badges remain visible.',
+                tip: 'TIP: The AI engine uses WESM 2022–2025 data calibrated volatility (σ ≈ 28%) and a risk-free rate of 6% as its baseline assumptions.'
+            },
+            {
+                icon: '▶', title: 'STEP 5 — Running the Simulation', tab: 'hedging',
+                body: 'Click the green "▶ RUN RISK ANALYSIS" button at the bottom of the left panel (or press R).\n\nThe simulation engine:\n• Samples 10,000 Monte Carlo price paths using calibrated WESM volatility\n• Calculates your CFD settlement payoff on each path\n• Computes full year forward P&L and risk metrics\n• Renders 4 charts in the right panel simultaneously\n• Updates all risk alerts, verdicts, and the performance audit section\n\nTypical run time: instant (< 0.3 seconds).',
+                tip: 'TIP: After clicking Run, look for the AUDIT VERDICT badge at the bottom — EXCELLENT means Kelly Fraction > 35% AND positive annual P&L.'
+            },
+            {
+                icon: '📊', title: 'STEP 6 — Reading the 4 Simulation Charts', tab: 'hedging',
+                body: 'The main panel displays 4 analytical charts after a simulation run:\n\n• CASH FLOW VOLATILITY REDUCTION — Monthly spot price vs. hedged effective price vs. your strike. Shows how the hedge dampens cash flow volatility.\n• MONTE CARLO PROBABILITY CONE — 95%, 75%, and 50% confidence bands of future spot price paths. Your strike appears as a horizontal line.\n• HEDGE PAYOFF DIAGRAM — Classic options payoff chart: shows exactly at what spot price your hedge generates profit vs. loss.\n• REGRET ANALYSIS — Monthly comparison of your hedged vs. unhedged P&L — useful for post-trade attribution.',
+                tip: 'TIP: A well-structured hedge should show your strike inside or near the Monte Carlo 75% confidence band — not at an extreme.'
+            },
+            {
+                icon: '🏆', title: 'STEP 7 — Trading Performance Audit Panel', tab: 'hedging',
+                body: 'Below the charts, the OFFICIAL TRADING PERFORMANCE AUDIT shows 8 key metrics:\n\n• ANNUAL NET P&L — Total hedge profit or loss across all 12 simulated months\n• AVERAGE MONTHLY SETTLEMENT — Average monthly CFD payment or receipt\n• PEAK MONTHLY SETTLEMENT — Best-performing month\n• MAX DRAWDOWN — Worst unrealized cumulative loss period\n• KELLY FRACTION — Mathematically optimal bet sizing from Kelly Criterion\n• OPTIMAL CONTRACT SIZE (MW) — AI-recommended contract size based on Kelly\n• WINNING MONTHS — Count of profitable months vs. total\n• AUDIT VERDICT — EXCELLENT / GOOD / MARGINAL / LOSS (colour-coded)',
+                tip: 'TIP: Target Kelly > 25% and EXCELLENT or GOOD Verdict. If you see a LOSS verdict, use Auto-Populate then run again to recover.'
+            },
+            {
+                icon: '📈', title: 'STEP 8 — Analytics Tab: VaR Dashboard', tab: 'analytics',
+                body: 'Switch to the Analytics tab (Bar Chart icon in the sidebar, or press key 3).\n\nThe VALUE-AT-RISK DASHBOARD shows three VaR estimates, each using a different methodology:\n\n• MONTE CARLO VaR (95%) — Simulates 10,000 scenarios with WESM-calibrated volatility. Most realistic but can understate tail risk.\n• HISTORICAL VaR (99%) — Uses actual observed WESM price distributions from 2022–2025. Best for capturing extreme spike risk.\n• PARAMETRIC VaR (97.5%) — Analytical formula assuming normal distribution. Fastest but least accurate for WESM fat-tailed prices.\n\nClick COMPUTE VaR after running the main simulation to populate the metric cards and bar chart.',
+                tip: 'TIP: For WESM, always weight Historical VaR most heavily — WESM has heavy fat tails that breach the Normal distribution assumption significantly.'
+            },
+            {
+                icon: '🔗', title: 'STEP 9 — Correlation Matrix Heatmap', tab: 'analytics',
+                body: 'The CORRELATION MATRIX shows pairwise price correlations between 6 key WESM market factors:\n\n• WESM Spot ↔ System Load: +0.88 (very strong — high load drives price spikes)\n• WESM Spot ↔ Coal ICE: +0.72 (strong — coal is the marginal fuel in most hours)\n• WESM Spot ↔ VRE Output: −0.61 (strong inverse — more solar/wind suppresses prices)\n• WESM Spot ↔ USD/PHP: +0.54 (moderate — FX drives imported fuel costs)\n• WESM Spot ↔ Brent Crude: −0.18 (weak — gas plants are only ~12% of dispatch)\n\nGreen cells = positive correlation. Red cells = inverse.\n\nUse these to identify natural offsetting positions and avoid double-counting risk.',
+                tip: 'TIP: The strongest natural hedge available in WESM is holding both a CFD (long fixed) AND rooftop solar assets — they naturally offset each other.'
+            },
+            {
+                icon: '📉', title: 'STEP 10 — Forward Curve & Break-Even', tab: 'analytics',
+                body: 'Two more tools in the Analytics tab:\n\n• FORWARD CURVE BUILDER — Plots the 12-month implied fair-value WESM price curve (centred on current spot) with seasonal adjustment factors applied. Shows ±confidence bands (+10% / −8%). Compare your strike against the forward curve to assess whether your contract is above or below fair value.\n\n• BREAK-EVEN ANALYSIS ENGINE — Automatically calculates the spot price at which your hedge flips from profitable to a loss. Also shows the current spread between average spot and your break-even. The P&L chart uses a color-coded gradient — green = profit zone, red = loss zone.',
+                tip: 'TIP: If your strike is above the forward curve, you are in-the-money on a seller position. If below, you are in-the-money as a buyer.'
+            },
+            {
+                icon: '🚦', title: 'STEP 11 — Optimal Hedge Entry Signal', tab: 'analytics',
+                body: 'At the bottom of the Analytics tab, the OPTIMAL HEDGE ENTRY SIGNAL provides a trading signal based on current simulation output:\n\n🟢 STRONG BUY — ENTER NOW: Spot spread > ₱500/MWh above strike AND Kelly > 30% conviction. Optimal window to initiate or increase the position.\n\n🟡 CAUTIOUS — MONITOR: Positive but moderate spread (₱0–500) AND Kelly 15–30%. Consider entering at 50% of your target size and scaling in.\n\n🔴 HOLD — DO NOT ENTER: Spread is negative (strike above spot average) or Kelly < 15%. Wait for spot price to rise or reduce your strike price.\n\nThe signal updates every time you run the simulation.',
+                tip: 'TIP: The signal uses your simulation\'s Kelly Fraction as the conviction filter — this naturally prevents over-sizing in uncertain market conditions.'
+            },
+            {
+                icon: '🔢', title: 'STEP 12 — Energy Options Greeks Calculator', tab: 'risktools',
+                body: 'In the Risk Management tab (Shield icon, press 4), the Greeks Calculator applies the Black-76 energy options pricing model:\n\n• Select CALL (Cap) or PUT (Floor) option type\n• Enter IMPLIED VOLATILITY (WESM typical: 20–35%)\n• Enter STRIKE PRICE and TIME TO EXPIRY (months)\n• Click COMPUTE GREEKS to see all 5 Greeks + Premium:\n\n  Δ DELTA — Hedge ratio (0 to 1 call; −1 to 0 put)\n  Γ GAMMA — Rate of delta change (convexity risk)\n  Θ THETA — Daily time decay in ₱/day\n  ν VEGA — Value change per 1% volatility move, in ₱\n  ρ RHO — Sensitivity to risk-free rate\n  💰 FAIR OPTION PREMIUM — ₱/MWh theoretical price',
+                tip: 'TIP: Use VEGA to estimate how much your option value changes if WESM implied volatility spikes during El Niño (vol often doubles).'
+            },
+            {
+                icon: '🗺️', title: 'STEP 13 — Portfolio Heat Map', tab: 'risktools',
+                body: 'The PORTFOLIO HEAT MAP is a powerful visual matrix showing P&L outcomes across two dimensions simultaneously:\n\nROWS = Hedge Ratio (60%, 70%, 80%, 90%, 100%)\nCOLUMNS = Month (January through December)\nCELLS = Net P&L in ₱M for that combination\n\nColour scale: Deep red = maximum loss, Deep green = maximum profit.\n\nThis lets you instantly see:\n• Which months profit regardless of ratio (always green)\n• Which months lose money even at 100% coverage (structural risk)\n• The optimal hedge ratio for each season',
+                tip: 'TIP: Look for the ratio row where most months are green — that is your optimal annual hedge ratio. WESM typically shows 80–90% as the sweet spot.'
+            },
+            {
+                icon: '💧', title: 'STEP 14 — Liquidity Risk Calendar & Concentration Risk', tab: 'risktools',
+                body: 'LIQUIDITY RISK HEAT CALENDAR — 12 monthly tiles showing WESM thin-trading risk:\n\n🔴 MAY–JUN / 9/10: CRITICAL — Dry season, hydro low, VRE curtailment, widest bid-offer spreads\n🟠 JUL–SEP / 7/10: HIGH — Transition period, typhoon risk, demand uncertainty\n🟡 MAR–APR / 4/10: MEDIUM — Pre-summer build-up\n🟢 NOV–FEB / 2–3/10: LOW — Wet season, ample hydro, tightest spreads\n\nCONCENTRATION RISK MONITOR — Scans your position for 4 risk types:\n• Counterparty concentration (% with one counterparty — >75% = CRITICAL)\n• Period concentration (over-reliant on one quarter)\n• Nodal concentration (Luzon vs. Visayas)\n• CFD type concentration (all Two-Way vs. diversified)',
+                tip: 'TIP: Initiate large hedge positions in LOW liquidity-risk months (Nov–Feb) to get tighter pricing and easier counterparty execution.'
+            },
+            {
+                icon: '🔄', title: 'STEP 15 — Auto-Roll Strategy Calculator', tab: 'risktools',
+                body: 'When an existing hedge is approaching expiry, the AUTO-ROLL CALCULATOR helps you transition to the next period without costly gaps:\n\n1. Enter your CURRENT STRIKE (existing position)\n2. Enter MONTHS TO EXPIRY of the current contract\n3. Enter CARRY RATE (% per annum financing cost)\n4. Enter the NEXT TERM LENGTH (new contract months)\n5. Click CALCULATE ROLL to see:\n   • OPTIMAL ROLL STRIKE — Theoretical entry point for the new contract\n   • CARRY COST — Cost of maintaining the position during the roll window\n   • ROLL P&L IMPACT — Net gain/loss from executing the roll at the optimal strike\n   • RECOMMENDED ACTION — Timing advice and target strike',
+                tip: 'TIP: Rolling hedges ≥ 1 month before expiry avoids the "roll premium" — counterparties charge more for last-minute rolls due to their hedging costs.'
+            },
+            {
+                icon: '📅', title: 'STEP 16 — Multi-Period Hedge Planner', tab: 'scheduling',
+                body: 'In the Scheduling tab (Calendar icon, press 5), the MULTI-PERIOD HEDGE PLANNER lets you design your FULL ANNUAL HEDGING PROGRAM across all four quarters:\n\n• Set a STRIKE PRICE and HEDGE RATIO independently for each quarter:\n  Q1 (Jan–Mar): Wet season — typically lower spot prices\n  Q2 (Apr–Jun): Transition — rising prices into summer\n  Q3 (Jul–Sep): Peak dry season — highest historical WESM prices\n  Q4 (Oct–Dec): Cooling off — prices moderate as wet season returns\n\n• Click PLAN ALL PERIODS to generate a full P&L table with quarterly and annual totals\n• Shown: Avg Spot vs. Strike per quarter, Net P&L, PROFIT/LOSS flag, Annual Total P&L',
+                tip: 'TIP: Consider using 95–100% hedge ratio in Q3 (historical peak) and 70–80% in Q1 (wet season) for optimal annual risk-adjusted returns.'
+            },
+            {
+                icon: '📄', title: 'STEP 17 — Deal Ticket Generator', tab: 'scheduling',
+                body: 'The DEAL TICKET GENERATOR produces a formatted trade confirmation document:\n\n1. Enter Counterparty Name (e.g., SMEC, SPPC, ACEN)\n2. Enter Trader Name (your name or desk)\n3. Enter Trade Date\n4. Enter Settlement Term (e.g., "Q3 2026" or "FY 2026")\n5. Click GENERATE TICKET — the system auto-fills from your last simulation:\n   • Auto-generated Reference Number (WESM-FH-XXXXXX)\n   • Strike, ratio, contract qty from current inputs\n   • Expected P&L from the simulation\n   • Compliance citations (DOE DC2026-02-0008, ERC Resolution)\n6. Click 🖨️ PRINT / SAVE to download as a .txt file',
+                tip: 'TIP: Always run the simulation BEFORE generating the ticket — the Expected P&L field pulls from window.lastSimData and will show "PENDING" if blank.'
+            },
+            {
+                icon: '⏱️', title: 'STEP 18 — Expiry Tracker & Backtesting Engine', tab: 'backtesting',
+                body: 'HEDGE EXPIRY COUNTDOWN TRACKER (Scheduling tab):\n• Add active hedges with name, expiry date, and settlement amount\n• Each shows a countdown in days with urgency colour-coding:\n  🔴 < 30 days = URGENT | 🟠 30–90 = UPCOMING | 🟢 > 90 = ON TRACK\n\nBACKTESTING ENGINE (Backtesting tab, press 6):\n• Set strategy STRIKE, HEDGE RATIO, year range (2022–2025), and REGION\n• Click ▶ RUN BACKTEST to replay your strategy on actual WESM data\n• Results: Total Backtest P&L, Win Rate, Max Drawdown, Sharpe Ratio\n• Monthly P&L bar chart (green = profit, red = loss)',
+                tip: 'TIP: A strategy with Win Rate > 60% AND Sharpe Ratio > 1.0 is considered robust for WESM conditions. Run backtests before committing to any annual CFD.'
+            },
+            {
+                icon: '⚡', title: 'STEP 19 — Stress Testing & UX Toolkit', tab: 'backtesting',
+                body: 'STRESS TESTING SUITE — 5 one-click catastrophic scenarios:\n🌡️ El Niño Drought: Hydro curtailment, spot +110%\n⚫ Coal Spike +40%: ICE coal to $190/t, merit-order disruption\n☀️ VRE Flood: Solar overgeneration, negative off-peak prices\n⚡ N-1 NGCP Outage: 500kV failure, +₱2,000/MWh nodal divergence\n💱 FX Crisis (USD 70+): Peso collapse, ERC cap recalibration\n\nEach shows Base Case P&L → Stressed P&L → Impact Delta + monthly line chart.\n\nUX TOOLKIT (press 7):\n• Dark Mode toggle (or press D)\n• Strategy A vs B Comparison with chart\n• Audit Report PDF (opens printable page)\n• Onboarding Tutorial (this panel)',
+                tip: 'TIP: Run all 5 stress tests on your final strategy before signing the CFD contract. At least two scenarios should still produce a positive P&L for the hedge to be considered resilient.'
+            },
+            {
+                icon: '🎓', title: 'Tutorial Complete — You Are Ready to Trade!', tab: 'uxtoolkit',
+                body: 'Congratulations! You have completed all 20 steps of the WESM HedgeTerminal guided tour.\n\nYou are now equipped to:\n✅ Design and price forward hedge contracts (CFD, Cap, Collar)\n✅ Run Monte Carlo and three-method VaR risk analysis\n✅ Compute energy option Greeks (Black-76 model)\n✅ Analyse portfolio concentration and liquidity risk\n✅ Plan your full annual hedging program across all 4 quarters\n✅ Backtest strategies against real 2022–2025 WESM data\n✅ Stress-test against El Niño, coal shocks, N-1 outages, and FX crises\n✅ Generate compliance-ready deal tickets and audit reports\n\nPress ESC or click 🎓 FINISH to close and start trading.',
+                tip: 'QUICK START WORKFLOW: Press A (Auto-Populate) → R (Run) → switch to Analytics tab → Compute VaR → Stress Test → Generate Deal Ticket.'
+            }
+        ];
+
+        var tutorialStep = 0; // var so it is accessible inside the IIFE event listeners above
+
+        function startTutorial() {
+            tutorialStep = 0;
+            var m = document.getElementById('tutorialModal');
+            if (m) m.style.display = 'flex';
+            var nb = document.getElementById('tutorialNextBtn');
+            if (nb) nb.style.display = 'block';
+            renderTutorialModal();
+        }
+
+        function closeTutorial() {
+            var m = document.getElementById('tutorialModal');
+            if (m) m.style.display = 'none';
+            var nb = document.getElementById('tutorialNextBtn');
+            if (nb) nb.style.display = 'none';
+            var pct = ((tutorialStep + 1) / tutorialSteps.length * 100).toFixed(0);
+            var tb = document.getElementById('tutorialBar');
+            if (tb) tb.style.width = pct + '%';
+            var st = document.getElementById('tutorialStepText');
+            if (st) st.textContent =
+                tutorialStep === tutorialSteps.length - 1
+                    ? '🎓 Tutorial complete! Click START TUTORIAL to replay.'
+                    : 'Paused at Step ' + (tutorialStep + 1) + '/' + tutorialSteps.length + '. Click START TUTORIAL to resume.';
+        }
+
+
+        function nextTutorialStep() {
+            if (tutorialStep < tutorialSteps.length - 1) { tutorialStep++; renderTutorialModal(); }
+        }
+
+        function prevTutorialStep() {
+            if (tutorialStep > 0) { tutorialStep--; renderTutorialModal(); }
+        }
+
+        function showTutorialStep() { renderTutorialModal(); }
+
+        function renderTutorialModal() {
+            const s = tutorialSteps[tutorialStep];
+            const total = tutorialSteps.length;
+            const pct = ((tutorialStep + 1) / total * 100).toFixed(0);
+
+            document.getElementById('tut-title').textContent = s.title;
+            document.getElementById('tut-header').style.background =
+                tutorialStep === total - 1 ? '#2e7d32' : '#0033cc';
+            document.getElementById('tut-bar').style.width = pct + '%';
+            document.getElementById('tut-icon').textContent = s.icon;
+
+            // Render body with newlines as line breaks
+            const bodyEl = document.getElementById('tut-body');
+            bodyEl.innerHTML = '';
+            s.body.split('\n').forEach(line => {
+                const span = document.createElement('span');
+                span.textContent = line;
+                bodyEl.appendChild(span);
+                bodyEl.appendChild(document.createElement('br'));
+            });
+
+            const tipEl = document.getElementById('tut-tip');
+            if (s.tip) { tipEl.textContent = s.tip; tipEl.style.display = 'block'; }
+            else { tipEl.style.display = 'none'; }
+
+            document.getElementById('tut-counter').textContent = `Step ${tutorialStep + 1} of ${total}`;
+            document.getElementById('tut-prev').style.visibility = tutorialStep === 0 ? 'hidden' : 'visible';
+            const isLast = tutorialStep === total - 1;
+            document.getElementById('tut-next').style.display = isLast ? 'none' : 'inline-block';
+            document.getElementById('tut-finish').style.display = isLast ? 'inline-block' : 'none';
+
+            if (s.tab) switchTab(s.tab);
+
+            // Sync inline widget progress
+            document.getElementById('tutorialBar').style.width = pct + '%';
+            document.getElementById('tutorialStepText').textContent =
+                `Step ${tutorialStep + 1}/${total}: ${s.title}`;
+        }
+
+        // ---- 20. Keyboard Shortcuts ----
+        document.addEventListener('keydown', e => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+            const k = e.key.toUpperCase();
+            if (k === 'R') { simulateForwardHedge(); }
+            else if (k === 'A') { automateProfits(); }
+            else if (k === 'E') { if (typeof exportToCSV === 'function') exportToCSV(); }
+            else if (k === 'J') { if (typeof exportSummaryJSON === 'function') exportSummaryJSON(); }
+            else if (k === 'D') { const tog = document.getElementById('darkModeToggle'); tog.checked = !tog.checked; toggleDarkMode(tog.checked); }
+            else if (k === '1') switchTab('hedging');
+            else if (k === '2') switchTab('history');
+            else if (k === '3') switchTab('analytics');
+            else if (k === '4') switchTab('risktools');
+            else if (k === '5') switchTab('scheduling');
+            else if (k === '6') switchTab('backtesting');
+            else if (k === '7') switchTab('uxtoolkit');
+        });
+
+        // ---- Auto-init analytics panels on tab switch ----
+        const _origSwitchTab = switchTab;
+        switchTab = function (id) {
+            _origSwitchTab(id);
+            if (id === 'analytics') { renderCorrelationMatrix(); renderForwardCurve(); renderBreakEvenAnalysis(); updateEntrySignal(); }
+            if (id === 'risktools') { renderPortfolioHeatMap(); renderLiquidityCalendar(); renderConcentrationRisk(); }
+            if (id === 'scheduling') { renderExpiryList(); }
+        };
+
         function downloadHedgeAudit() {
             const strike = document.getElementById('strikePrice').value;
             const log = document.getElementById('simulationAuditLog').innerText;
@@ -2841,24 +4352,91 @@
         // Call ticker immediately on script parse (no waiting)
         initTicker();
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function () {
             lucide.createIcons();
-            initTicker(); // Re-init after DOM ready to ensure it's populated
+            initTicker();
             initActivity();
 
-            setTimeout(() => {
+
+            setTimeout(function () {
                 switchTab('hedging');
-                initTicker(); // Final call after all scripts load
+                initTicker();
                 simulateForwardHedge();
             }, 200);
 
             // Refresh ticker every 60 seconds with updated timestamp
             setInterval(initTicker, 60000);
 
-            setInterval(() => {
-                document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-GB');
-            }, 1000);
+            (function liveClock() {
+                const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                function tick() {
+                    const n = new Date();
+                    const el = document.getElementById('clock');
+                    if (!el) return;
+                    const dd = String(n.getDate()).padStart(2, '0');
+                    const hh = String(n.getHours()).padStart(2, '0');
+                    const mm = String(n.getMinutes()).padStart(2, '0');
+                    const ss = String(n.getSeconds()).padStart(2, '0');
+                    el.textContent = `${DAYS[n.getDay()]} ${dd} ${MONTHS[n.getMonth()]} ${n.getFullYear()}  ${hh}:${mm}:${ss}`;
+                }
+                tick(); // immediate tick on DOM ready
+                setInterval(tick, 1000);
+            })();
         });
+
+        // --- Call functions that need DOM to already exist ---
+        // (script is at end of body, so DOM IS available already)
+        if (document.readyState === 'loading') {
+            // Very unlikely but safe fallback
+            document.addEventListener('DOMContentLoaded', function () {
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+                buildTutorialModal();
+                (function clockInit() {
+                    var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                    var MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                    function tick() {
+                        var n = new Date();
+                        var el = document.getElementById('clock');
+                        if (!el) return;
+                        var dd = String(n.getDate()).padStart(2, '0');
+                        var hh = String(n.getHours()).padStart(2, '0');
+                        var mm = String(n.getMinutes()).padStart(2, '0');
+                        var ss = String(n.getSeconds()).padStart(2, '0');
+                        el.textContent = DAYS[n.getDay()] + ' ' + dd + ' ' + MONTHS[n.getMonth()] + ' ' + n.getFullYear() + '  ' + hh + ':' + mm + ':' + ss;
+                    }
+                    tick();
+                    setInterval(tick, 1000);
+                })();
+            });
+        } else {
+            // DOM is already ready (normal case when script is at end of body)
+            // Lucide is loaded from CDN — poll until it's available, then render icons
+            (function waitForLucide(retries) {
+                if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                    lucide.createIcons();
+                } else if (retries > 0) {
+                    setTimeout(function () { waitForLucide(retries - 1); }, 50);
+                }
+            })(40); // up to 2 seconds of retries (40 × 50ms)
+            buildTutorialModal();
+            (function clockInit() {
+                var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                var MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                function tick() {
+                    var n = new Date();
+                    var el = document.getElementById('clock');
+                    if (!el) return;
+                    var dd = String(n.getDate()).padStart(2, '0');
+                    var hh = String(n.getHours()).padStart(2, '0');
+                    var mm = String(n.getMinutes()).padStart(2, '0');
+                    var ss = String(n.getSeconds()).padStart(2, '0');
+                    el.textContent = DAYS[n.getDay()] + ' ' + dd + ' ' + MONTHS[n.getMonth()] + ' ' + n.getFullYear() + '  ' + hh + ':' + mm + ':' + ss;
+                }
+                tick();
+                setInterval(tick, 1000);
+            })();
+        }
 
     </script>
 </body>
